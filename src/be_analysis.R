@@ -60,6 +60,52 @@ lapply(belc_ta, function(x){
 })
 
 # Mean monthly air temperature and rainfall over all years (in one plot)
-# Also so, dass immer die beiden Boxplots für T und R nebeneinander für jeden 
+# Also so, dass immer die beiden Boxplots f?r T und R nebeneinander f?r jeden 
 # Monat sind, praktisch wie die monatlichen Abweichungen, wo wir die einzelnen
 # Jahre pro Monat immer nebeneinander gepackt haben.
+lapply(belc_p, function(x){
+  be_plot_ta_pr_mmltm (data = df[df$belc == x,], station=x, year= "", path_output)  
+})
+
+# Mean monthly air temperature and rainfall over one year (in one plot)
+bel_year <- c("2009", "2010","2011","2012")
+lapply(belc_p, function(x){
+  lapply(bel_year, function(y){
+    be_plot_ta_pr_mmltm (data = df[df$belc == x,], station=x, year=y, path_output)  
+  })
+})
+#dev.off()
+
+# Mean monthly air temperature one year (in multiplot)
+png(paste0(path_output, "be_plot_multiplot_ta_200.png"),
+    width     = 3880,
+    height    = 4808,
+    units     = "px",
+    res       = 200,
+    # pointsize = 1
+)
+p1 <- try(be_plot_ta_mmltm(data = df[df$belc == "HEG",], title = "HEG") )
+p2 <- try(be_plot_ta_mmltm(data = df[df$belc == "HEW",], title = "HEW") )
+p3 <- try(be_plot_ta_mmltm(data = df[df$belc == "SEG",], title = "SEG") )
+p4 <- try(be_plot_ta_mmltm(data = df[df$belc == "SEW",], title = "SEW") )
+p5 <- try(be_plot_ta_mmltm(data = df[df$belc == "AEG",], title = "AEG") )
+p6 <- try(be_plot_ta_mmltm(data = df[df$belc == "AEW",], title = "AEW") )
+try(multiplot(p1, p2, p3, p4, p5, p6))
+dev.off()
+
+# Mean monthly air temperature one year (in multiplot)
+png(paste0(path_output, "be_plot_multiplot_ta_200_dmltm.png"),
+    width     = 3880,
+    height    = 4808,
+    units     = "px",
+    res       = 200,
+    # pointsize = 1
+)
+p1 <- try(be_plot_ta_dmltm(data = df[df$belc == "HEG",], title = "HEG") )
+p2 <- try(be_plot_ta_dmltm(data = df[df$belc == "HEW",], title = "HEW") )
+p3 <- try(be_plot_ta_dmltm(data = df[df$belc == "SEG",], title = "SEG") )
+p4 <- try(be_plot_ta_dmltm(data = df[df$belc == "SEW",], title = "SEW") )
+p5 <- try(be_plot_ta_dmltm(data = df[df$belc == "AEG",], title = "AEG") )
+p6 <- try(be_plot_ta_dmltm(data = df[df$belc == "AEW",], title = "AEW") )
+try(multiplot(p1, p2, p3, p4, p5, p6))
+dev.off()
