@@ -1,7 +1,7 @@
 library(ggplot2)
 library(RColorBrewer)
 
-be_plot_ta_mmltm <- function(data, title){
+be_plot_ta_ltmm <- function(data, title){
   ggplot(data, aes(x = month, y = Ta_200)) + 
     geom_boxplot(position = "dodge", fill = "#e31a1c") +
     geom_vline(xintercept = seq(1.5, 12, 1), linetype = "dotted") +
