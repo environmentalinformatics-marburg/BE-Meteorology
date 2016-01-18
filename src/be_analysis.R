@@ -2,9 +2,9 @@ require(grid)
 library(ggplot2)
 library(reshape2)
 
-path_source <- "D:/active/exploratorien/paper_be_meteorology/src/"
-path_data <- "D:/active/exploratorien/data/"
-path_output <- "D:/active/exploratorien/output/"
+path_source <- "/home/dogbert/paper_be_meteorology/src/"
+path_data <- "/home/dogbert/data/"
+path_output <- "/home/dogbert/output/"
 
 source(paste0(path_source, "be_deseason.R"))
 source(paste0(path_source, "be_io_lui.R"))
@@ -49,6 +49,7 @@ belc_ta <- unique(df_met_m$g_belc[df_met_m$g_belc != "AET" &
                                     df_met_m$g_belc != "SET"])
 belc_p <- c("AEG", "HEG", "SEG")
 
+# Temperature
 # Mean monthly air temperature over all years
 lapply(belc_ta, function(x){
   be_plot_ta_mm_box(data = df_met_m[df_met_m$g_belc == x,], title = x)  
@@ -59,10 +60,15 @@ lapply(belc_ta, function(x){
   be_plot_ta_mm_ds_box(data = df_met_m[df_met_m$g_belc == x,], title = x)  
 })
 
-
+# Rainfall
 # Mean monthly rainfall over all years
 lapply(belc_p, function(x){
   be_plot_pr_mm_box(data = df_met_m[df_met_m$g_belc == x,], title = x)  
+})
+
+# Mean monthly rainfall per month and year
+lapply(belc_p, function(x){
+  be_plot_p_mm(data = df_met_m[df_met_m$g_belc == x,], title = x)  
 })
 
 # Rainfall deviations from long term mean per month and year
