@@ -23,7 +23,7 @@ df_met_m <- be_io_met_monthly(paste0(path_data, "met_m/plots.csv"))
 df_met_a <- be_io_met_annual(paste0(path_data, "met_a/plots.csv"))
 df_lui <- be_io_lui(paste0(path_data, "lui.csv"))
 df_lut <- be_io_lut(paste0(path_data, "lut.csv"))
-
+df_bio <- read.table(paste0(path_data, "biomasse.csv"), header = TRUE, sep = ";", dec = ",")
 
 # Deseason annual air temperature
 df_met_m <- be_deseason_m(df_met_m)
@@ -38,6 +38,8 @@ df_met_m <- merge(df_met_m, df_lui_lut,
 df_met_a <- merge(df_met_a, df_lui_lut, 
                   by.x=c("plotID","g_pa"), by.y=c("plotID","year"),
                   all.x = TRUE)
+df_bio <- merge(df_met_a[df_met_a$g_a== "2009",], df_bio,by.x=c("plotID"),
+                all.x = TRUE)
 
 head(df_met_m)
 head(df_met_a)
@@ -77,9 +79,6 @@ lapply(belc_p, function(x){
 })
 
 
-
-
-
 #Test tnauss
 data <- df_met_m[df_met_m$g_belc == "SEG",]
 title <- "test"
@@ -98,7 +97,14 @@ ggplot(data, aes(x = LUI, y = M_std, color = as.factor(g_a))) + geom_point()
 ggplot(data[data$plotID == "SEG20" & data$g_a < 2013,], aes(x = timestamp, y = Ta_200_mm_ds, group =1)) + geom_point() + geom_smooth(method=lm)
 
 
-
+#Test sforteva bio
+dataBM <- df_bio[df_bio$g_belc == "SEG",]
+title <- "test BM"
+dataBM$BM_cut <- cut(dataBM$BM, quantile(dataBM$BM, probs = seq(0, 1, 0.1), na.rm = TRUE))
+#dataBM$BM_cut <- cut(dataBM$BM, seq(0, 5, 1))
+ggplot(dataBM[!is.na(dataBM$BM_cut),], aes(x = BM_cut, y = Ta_200_mm_ds)) + geom_boxplot(notch=TRUE)
+ggplot(dataBM[!is.na(dataBM$BM_cut),], aes(x = BM, y = Ta_200)) + geom_point()
+#ggplot(dataBM, aes(x = BM, y = M_std, color = as.factor(g_a))) + geom_point()
 
 
 
