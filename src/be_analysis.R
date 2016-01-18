@@ -16,7 +16,7 @@ source(paste0(path_source, "be_plot_pr_mm_box.R"))
 source(paste0(path_source, "be_plot_pr_mm_ds_box.R"))
 source(paste0(path_source, "be_plot_ta_mm_box.R"))
 source(paste0(path_source, "be_plot_ta_mm_ds_box.R"))
-
+source(paste0(path_source, "000_be_plot_pr_mmltm.R"))
 
 # Read data
 df_met_m <- be_io_met_monthly(paste0(path_data, "met_m/plots.csv"))

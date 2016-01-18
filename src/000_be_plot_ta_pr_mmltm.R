@@ -25,7 +25,7 @@ be_plot_ta_pr_mmltm <- function(data, station, year, path_output){
     geom_vline(xintercept = seq(1.5, 12, 1), linetype = "dotted") +
     scale_fill_manual(values = c( "#e31a1c","#a6cee3")) + 
     labs(list(title = year, 
-              x = "Month", y = "Air temperature (C, deseasoned) & Precipitation 2009 to 2014", 
+              x = "Month", y = "Air temperature (C, deseasoned) & Precipitation 2009 to 2015", 
               fill = "Parameter")) +
     theme(axis.text.x = element_text(angle = 90, hjust = 1))
   print(p1)
