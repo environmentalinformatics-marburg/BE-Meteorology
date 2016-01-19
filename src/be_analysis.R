@@ -68,6 +68,9 @@ lapply(belc_p, function(x){
   be_plot_pr_mm_box(data = df_met_m[df_met_m$g_belc == x,], title = x)  
 })
 
+# Mean monthly rainfall over all years and all plots
+be_plot_p_mm_sumary(data = df_met_m,"test") 
+
 # Mean monthly rainfall per month and year
 lapply(belc_p, function(x){
   be_plot_p_mm(data = df_met_m[df_met_m$g_belc == x,], title = x)  
