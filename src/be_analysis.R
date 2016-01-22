@@ -30,6 +30,11 @@ df_lui <- be_io_lui(paste0(path_data, "lui.csv"))
 df_lut <- be_io_lut(paste0(path_data, "lut.csv"))
 df_bio <- read.table(paste0(path_data, "biomasse.csv"), header = TRUE, sep = ";", dec = ",")
 
+
+# Copy the values from column P_RT_NRT_02 into column P_RT_NRT only for HET*
+df_met_m$P_RT_NRT[df_met_m$plotID == "HET38" ]<-df_met_m$P_RT_NRT_02[df_met_m$plotID == "HET38" ]
+df_met_m$P_RT_NRT[df_met_m$plotID == "HET38" ]<-df_met_m$P_RT_NRT_02[df_met_m$plotID == "HET38" ]
+
 # Deseason annual air temperature
 df_met_m <- be_deseason_m(df_met_m)
 df_met_a <- be_deseason_a(df_met_a)
