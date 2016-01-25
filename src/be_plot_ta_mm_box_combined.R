@@ -1,7 +1,7 @@
-be_plot_ta_mm_box_combined <- function(data, title){
+be_plot_ta_mm_box_combined <- function(data, notch = FALSE, title){
   data <- data[!data$g_belc %in% c("AET", "HET", "SET"), ]
   ggplot(data, aes(x = g_m, y = Ta_200, fill = g_belc)) + 
-    geom_boxplot(position = "dodge") +
+    geom_boxplot(position = "dodge", notch = notch) +
     geom_vline(xintercept = seq(1.5, 12, 1), linetype = "dotted") +
     scale_fill_manual(values = c("#a6cee3", "#1f78b4", "#b2df8a", 
                                  "#33a02c", "#fb9a99", "#e31a1c")) + 

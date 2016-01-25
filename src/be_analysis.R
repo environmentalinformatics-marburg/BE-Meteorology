@@ -69,7 +69,7 @@ belc_p <- c("AEG", "HEG", "SEG")
 #   })
 
 # Mean monthly air temperature over all years per Exploratory (combined plot)
-be_plot_ta_mm_box_combined(data = df_met_m, title = NULL)  
+be_plot_ta_mm_box_combined(data = df_met_m, notch = TRUE, title = NULL)  
 
 # Air temperature deviations from long term mean per month, year and Exploratory
 # lapply(belc_ta, function(x){
@@ -77,7 +77,16 @@ be_plot_ta_mm_box_combined(data = df_met_m, title = NULL)
 # })
 
 # Monthly air temperature deviations from long term mean per year and Exploratory
-be_plot_ta_mm_ds_box_combined(data = df_met_m, title = NULL)  
+be_plot_ta_mm_ds_box_combined(data = df_met_m, notch = TRUE, title = NULL)  
+
+head(df_met_a)
+
+for(i in unique(df_met_a$g_belc)){
+  print(i)
+  print(summary(df_met_a[df_met_a$g_belc == i, 
+                         c("g_belc", "Ta_200", "Ta_200_min", 
+                           "Ta_200_max", "P_RT_NRT")]))
+}
 
 
 # Rainfall

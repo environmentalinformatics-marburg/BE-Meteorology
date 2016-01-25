@@ -1,6 +1,6 @@
-be_plot_pr_mm_box_combined <- function(data, title){
+be_plot_pr_mm_box_combined <- function(data, notch = FALSE, title){
   ggplot(data, aes(x = g_m, y = P_RT_NRT, fill = g_belc)) + 
-    geom_boxplot(position = "dodge") +
+    geom_boxplot(position = "dodge", notch = notch) +
     geom_vline(xintercept = seq(1.5, 12, 1), linetype = "dotted") +
     scale_fill_manual(values = c("#a6cee3", "#1f78b4", "#b2df8a", "#33a02c",
                                  "#fb9a99", "#e31a1c","#DBD413")) + 
