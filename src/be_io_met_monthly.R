@@ -15,6 +15,10 @@ be_io_met_monthly <- function(filepath, ...){
   # Define grouping by exploratory and land cover type
   df_met$g_belc <- substr(as.character(df_met$plotID), 1, 3)
   
+  # Define grouping by exploratory, land cover type and month
+  df_met$g_belcm <- paste0(substr(as.character(df_met$plotID), 1, 3),
+                          "_", substr(as.character(df_met$datetime), 6, 7))
+  
   # Define grouping by plot and month
   df_met$g_pm <- paste0(as.character(df_met$plotID), "_",
                       substr(as.character(df_met$datetime), 6, 7))

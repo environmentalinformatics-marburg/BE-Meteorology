@@ -5,7 +5,7 @@ be_plot_pr_mm_box_combined <- function(data, notch = FALSE, title){
     scale_fill_manual(values = c("#a6cee3", "#1f78b4", "#b2df8a", "#33a02c",
                                  "#fb9a99", "#e31a1c","#DBD413")) + 
     #geom_vline(xintercept = seq(6.5, 6*12, 6), linetype = "dotted") +
-    #stat_summary(fun.y=median, geom="line", aes(group =  year,  colour  = year))  + 
+    stat_summary(fun.y=median, geom="line", aes(group =  g_belc,  colour  = g_belc))  + 
     labs(list(title = title, 
               x = "Month", y = "Precipitation (mm, monthly sum)", 
               fill = "Exploratory")) +

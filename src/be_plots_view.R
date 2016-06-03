@@ -1,10 +1,12 @@
-install.packages("mapview")
 library(mapview)
 library(sp)
 library(raster)
 
 path_output <- "/home/dogbert/"
 path_data <- "/home/dogbert/data/"
+path_data <- "D:/active/exploratorien/data/"
+path_output <- "D:/active/exploratorien/output/"
+
 
 ######################### HAINICH ######################
 data_hai <- read.table(paste0(path_data, "hai.csv"), header = TRUE, sep = ",", dec = ".")

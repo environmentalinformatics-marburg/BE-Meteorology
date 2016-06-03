@@ -10,5 +10,5 @@ be_plot_ta_mm_ds_box_combined <- function(data, notch = False, title){
     labs(list(title = title, 
               x = "Year", y = "Air temperature (°C, deseasoned monthly mean)", 
               fill = "Exploratory")) +
-    theme(axis.text.x = element_text(angle = 90, hjust = 1))
+    theme(axis.text.x = element_text(angle = 90, hjust = 1), text = element_text(size=30))
 }
