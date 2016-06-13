@@ -18,7 +18,9 @@ source(paste0(path_source, "be_plot_pr_mm_box_combined.R"))
 source(paste0(path_source, "be_plot_pr_mm_ds_box.R"))
 source(paste0(path_source, "be_plot_pr_mm_ds_box_combined.R"))
 source(paste0(path_source, "be_plot_ta_mm_box.R"))
+source(paste0(path_source, "be_plot_ta_am_box_combined.R"))
 source(paste0(path_source, "be_plot_ta_mm_box_combined.R"))
+source(paste0(path_source, "be_plot_ta_am_box_combined_indv.R"))
 source(paste0(path_source, "be_plot_ta_mm_box_combined_indv.R"))
 source(paste0(path_source, "be_plot_ta_mm_ds_box.R"))
 source(paste0(path_source, "be_plot_ta_mm_ds_box_combined.R"))
@@ -31,6 +33,14 @@ df_met_a <- be_io_met_annual(paste0(path_data, "met_a/plots.csv"))
 df_lui <- be_io_lui(paste0(path_data, "lui.csv"))
 df_lut <- be_io_lut(paste0(path_data, "lut.csv"))
 df_bio <- read.table(paste0(path_data, "biomasse.csv"), header = TRUE, sep = ";", dec = ",")
+
+
+tmin <- unique(df_met_m$timestamp[as.character(df_met_m$datetime) == "2009-01-01T00:00"]) - 1
+tmax <- unique(df_met_m$timestamp[as.character(df_met_m$datetime) == "2016-01-01T00:00"])
+
+df_met_m_2016 <- df_met_m[df_met_m$timestamp >= tmax, ]
+
+df_met_m <- df_met_m[tmin < df_met_m$timestamp & df_met_m$timestamp < tmax, ]
 
 
 # Copy the values from column P_RT_NRT_02 into column P_RT_NRT only for HET*
@@ -64,32 +74,76 @@ belc_ta <- unique(df_met_m$g_belc[df_met_m$g_belc != "AET" &
                                     df_met_m$g_belc != "SET"])
 belc_p <- c("AEG", "HEG", "SEG")
 
-# Temperature
-# Mean monthly air temperature over all years per Exploratory (single plots)
-# lapply(belc_ta, function(x){
-#   be_plot_ta_mm_box(data = df_met_m[df_met_m$g_belc == x,], title = x)  
-#   })
 
 # Mean monthly air temperature over all years per Exploratory (combined plot)
-be_plot_ta_mm_box_combined(data = df_met_m, notch = TRUE, title = NULL)  
+ta_mm_box_combined <- be_plot_ta_mm_box_combined(data = df_met_m, notch = TRUE, title = NULL)  
+png(paste0(path_output, "ta_mm_box_combined.png"), 
+    width = 1024 * 7, 
+    height = 748 * 6, 
+    units = "px", 
+    res = 600)
+ta_mm_box_combined
+graphics.off()
 
-# Air temperature deviations from long term mean per month, year and Exploratory
-# lapply(belc_ta, function(x){
-#   be_plot_ta_mm_ds_box(data = df_met_m[df_met_m$g_belc == x,], title = x)  
-# })
+ta_mm_box_combined_indv <- be_plot_ta_mm_box_combined_indv(data = df_met_m, notch = TRUE, title = NULL,
+                                                      plotIDs = c("HEG42", "HEW12"),
+                                                      belcs = c("HEG", "HEW"))  
+png(paste0(path_output, "ta_mm_box_combined_indv.png"), 
+    width = 1024 * 7, 
+    height = 748 * 6, 
+    units = "px", 
+    res = 600)
+ta_mm_box_combined_indv
+graphics.off()
+
 
 # Monthly air temperature deviations from long term mean per year and Exploratory
-be_plot_ta_mm_ds_box_combined(data = df_met_m, notch = TRUE, title = NULL)  
+ta_mm_ds_box_combined <- be_plot_ta_mm_ds_box_combined(data = df_met_m, notch = TRUE, title = NULL)  
+png(paste0(path_output, "ta_mm_ds_box_combined.png"), 
+    width = 1024 * 7, 
+    height = 748 * 6, 
+    units = "px", 
+    res = 600)
+ta_mm_ds_box_combined
+graphics.off()
 
-head(df_met_a)
 
-be_plot_ta_mm_ds_box_combined_indv(data = df_met_m, notch = TRUE, title = NULL,
+
+ta_mm_ds_box_combined_indv <- be_plot_ta_mm_ds_box_combined_indv(data = df_met_m, notch = TRUE, title = NULL,
                                    plotIDs = c("HEG42", "HEW12"),
                                    belcs = c("HEG", "HEW"))
+png(paste0(path_output, "ta_mm_ds_box_combined_indv.png"), 
+    width = 1024 * 7, 
+    height = 748 * 6, 
+    units = "px", 
+    res = 600)
+ta_mm_ds_box_combined_indv
+graphics.off()
 
-be_plot_ta_mm_box_combined_indv(data = df_met_m, notch = TRUE, title = NULL,
-                                plotIDs = c("HEG42", "HEW12"),
-                                belcs = c("HEG", "HEW"))
+
+ta_am_box_combined <- be_plot_ta_am_box_combined(data = df_met_a, notch = TRUE, title = NULL)  
+png(paste0(path_output, "ta_am_box_combined.png"), 
+    width = 1024 * 7, 
+    height = 748 * 6, 
+    units = "px", 
+    res = 600)
+ta_am_box_combined
+graphics.off()
+
+
+ta_am_box_combined_indv <- be_plot_ta_am_box_combined_indv(data = df_met_a, notch = TRUE, title = NULL,
+                                                           plotIDs = c("HEG42", "HEW12"),
+                                                           belcs = c("HEG", "HEW"))
+png(paste0(path_output, "ta_am_box_combined_indv.png"), 
+    width = 1024 * 7, 
+    height = 748 * 6, 
+    units = "px", 
+    res = 600)
+ta_am_box_combined_indv
+graphics.off()
+
+
+
 
 for(i in unique(df_met_a$g_belc)){
   print(i)
@@ -99,22 +153,73 @@ for(i in unique(df_met_a$g_belc)){
 }
 
 
-# Rainfall
-# Mean monthly rainfall over all years per Exploratory (single plots)
-# lapply(belc_p, function(x){
-#   be_plot_pr_mm_box(data = df_met_m[df_met_m$g_belc == x,], title = x)  
-# })
+df_met_m_nd <- df_met_m[df_met_m$P_RT_NRT < 300,]
+
 
 # Mean monthly rainfall over all years per Exploratory (combined plot)
-be_plot_pr_mm_box_combined(data = df_met_m, title = NULL) 
+df_met_a_nd <- aggregate(df_met_m_nd$P_RT_NRT, by = list(df_met_m_nd$g_pa), FUN = sum)
+colnames(df_met_a_nd)[2] <- "P_RT_NRT"
+df_met_a_nd$g_belc <- substr(df_met_a_nd$Group.1, 1, 3)
+df_met_a_nd$g_a <- substr(df_met_a_nd$Group.1, 7, 10)
 
-# Rainfall deviations from long term mean per month, year and Exploratory
-# lapply(belc_p, function(x){
-#   be_plot_pr_mm_ds_box (data = df_met_m[df_met_m$g_belc == x,], title = x)  
-# })
+pr_am_box_combined <- be_plot_pr_am_box_combined(data = df_met_a_nd[
+  df_met_a_nd$g_belc %in% c("AEG", "HEG", "SEG") &
+    df_met_a_nd$P_RT_NRT > 250, ], title = NULL) 
+
+png(paste0(path_output, "pr_am_box_combined.png"), 
+    width = 1024 * 7, 
+    height = 748 * 6, 
+    units = "px", 
+    res = 600)
+pr_am_box_combined
+graphics.off()
+
+
+pr_mm_box_combined <- be_plot_pr_mm_box_combined(data = df_met_m_nd, title = NULL) 
+png(paste0(path_output, "pr_mm_box_combined.png"), 
+    width = 1024 * 7, 
+    height = 748 * 6, 
+    units = "px", 
+    res = 600)
+pr_mm_box_combined
+graphics.off()
+
+
+pr_mm_box_combined_indv <- be_plot_pr_mm_box_combined_indv(data = df_met_m_nd, title = NULL, notch = FALSE,
+                                plotIDs = c("HEG31"),
+                                belcs = c("HEG", "HET")) 
+png(paste0(path_output, "pr_mm_box_combined_indv.png"), 
+    width = 1024 * 7, 
+    height = 748 * 6, 
+    units = "px", 
+    res = 600)
+pr_mm_box_combined_indv
+graphics.off()
+
 
 # Monthly rainfall total deviations from long term mean per year and Exploratory
-be_plot_pr_mm_ds_box_combined(data = df_met_m, title = NULL)  
+pr_mm_ds_box_combined <- be_plot_pr_mm_ds_box_combined(data = df_met_m_nd, title = NULL)  
+png(paste0(path_output, "pr_mm_ds_box_combined.png"), 
+    width = 1024 * 7, 
+    height = 748 * 6, 
+    units = "px", 
+    res = 600)
+pr_mm_ds_box_combined
+graphics.off()
+
+
+pr_mm_ds_box_combined_indv <- be_plot_pr_mm_ds_box_combined_indv(data = df_met_m_nd, title = NULL, notch = TRUE,
+                                   plotIDs = c("HEG31"),
+                                   belcs = c("HEG", "HET")) 
+png(paste0(path_output, "pr_mm_ds_box_combined_indv.png"), 
+    width = 1024 * 7, 
+    height = 748 * 6, 
+    units = "px", 
+    res = 600)
+pr_mm_ds_box_combined_indv
+graphics.off()
+
+
 
 
 #Test tnauss

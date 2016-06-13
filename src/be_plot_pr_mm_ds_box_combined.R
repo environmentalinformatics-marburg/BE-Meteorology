@@ -9,5 +9,5 @@ be_plot_pr_mm_ds_box_combined <- function(data, title){
     labs(list(title = title, 
               x = "Year", y = "Precipitation (mm, deseasoned)", 
               fill = "Exploratory")) +
-    theme(axis.text.x = element_text(angle = 90, hjust = 1), text = element_text(size=30))
+    theme(axis.text.x = element_text(angle = 90, hjust = 1), text = element_text(size=20))
 }
