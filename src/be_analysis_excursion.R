@@ -13,10 +13,13 @@ source(paste0(path_source, "be_io_lut.R"))
 source(paste0(path_source, "be_io_met_annual.R"))
 source(paste0(path_source, "be_io_met_monthly.R"))
 source(paste0(path_source, "be_plot_multi.R"))
+source(paste0(path_source, "be_plot_pr_am_box_combined.R"))
 source(paste0(path_source, "be_plot_pr_mm_box.R"))
 source(paste0(path_source, "be_plot_pr_mm_box_combined.R"))
+source(paste0(path_source, "be_plot_pr_mm_box_combined_indv.R"))
 source(paste0(path_source, "be_plot_pr_mm_ds_box.R"))
 source(paste0(path_source, "be_plot_pr_mm_ds_box_combined.R"))
+source(paste0(path_source, "be_plot_pr_mm_ds_box_combined_indv.R"))
 source(paste0(path_source, "be_plot_ta_mm_box.R"))
 source(paste0(path_source, "be_plot_ta_am_box_combined.R"))
 source(paste0(path_source, "be_plot_ta_mm_box_combined.R"))
@@ -58,7 +61,7 @@ df_met_m <- merge(df_met_m, df_lui_lut,
                   by.x=c("plotID","g_a"), by.y=c("plotID","year"),
                   all.x = TRUE)
 df_met_a <- merge(df_met_a, df_lui_lut, 
-                  by.x=c("plotID","g_pa"), by.y=c("plotID","year"),
+                  by.x=c("plotID","g_a"), by.y=c("plotID","year"),
                   all.x = TRUE)
 df_bio <- merge(df_met_a[df_met_a$g_a== "2009",], df_bio,by.x=c("plotID"),
                 all.x = TRUE)
@@ -67,6 +70,15 @@ head(df_met_m)
 head(df_met_a)
 head(df_bio)
 
+t <- df_met_a[as.character(df_met_a$g_belc) %in% c("HEG"),]
+plot(t$L, t$Ta_200)
+l <- lm(t$Ta_200 ~ t$L)
+summary(l)
+abline(l)
+
+
+ggplot(t, aes(x = LUI, y = Ta_200, color = LUI)) + 
+  geom_boxplot(, notch = TRUE)
 
 # PLOTS
 # Create plots per exploratory and land cover type
@@ -74,6 +86,39 @@ belc_ta <- unique(df_met_m$g_belc[df_met_m$g_belc != "AET" &
                                     df_met_m$g_belc != "SET"])
 belc_p <- c("AEG", "HEG", "SEG")
 
+
+ggplot(data = df_met_m[
+  as.character(df_met_m$plotID) %in% c("HEG42", "HEG16", "HEG04"),], 
+       aes(x = g_a, y = Ta_200_mm_ds, fill = plotID)) +
+  geom_boxplot(notch = TRUE)
+
+ggplot(data = df_met_m[
+  as.character(df_met_m$plotID) %in% c("HEW12", "HEG42"),], 
+  aes(x = g_a, y = Ta_200_mm_ds, fill = plotID)) +
+  geom_boxplot(notch = TRUE)
+
+ggplot(data = df_met_m_nd[
+  as.character(df_met_m_nd$plotID) %in% c("HEG03", "HEG19", "HEG20", "HEG24", "HEG29", "HEG31", "HEG48"),], 
+  aes(x = g_a, y = P_RT_NRT_ms_ds, fill = plotID)) +
+  geom_boxplot(notch = TRUE)+
+  theme_bw() +
+  ggtitle("Deseasoned rainfall variablity, HEGx") + 
+  theme(plot.title = element_text(size = 20),
+        axis.title = element_text(size = 20),
+        axis.text = element_text(size = 15)) + 
+  labs(x = "Year", y = "Rainfall (mm)")
+
+
+ggplot(data = df_met_m_nd[
+  as.character(df_met_m_nd$plotID) %in% c("HEG03", "HEG19", "HEG20", "HEG24", "HEG29", "HEG31", "HEG48"),], 
+  aes(x = plotID, y = P_RT_NRT, fill = plotID)) +
+  geom_boxplot(notch = TRUE)
+
+
+
+
+df_met_m[as.character(df_met_m$plotID) == "HEG42", "Ta_200"] | 
+           as.character(df_met_m$plotID) == "HEG17",]
 
 # Mean monthly air temperature over all years per Exploratory (combined plot)
 ta_mm_box_combined <- be_plot_ta_mm_box_combined(data = df_met_m, notch = TRUE, title = NULL)  
@@ -85,7 +130,8 @@ png(paste0(path_output, "ta_mm_box_combined.png"),
 ta_mm_box_combined
 graphics.off()
 
-ta_mm_box_combined_indv <- be_plot_ta_mm_box_combined_indv(data = df_met_m, notch = TRUE, title = NULL,
+
+data(Fort)ta_mm_box_combined_indv <- be_plot_ta_mm_box_combined_indv(data = df_met_m, notch = TRUE, title = NULL,
                                                       plotIDs = c("HEG42", "HEW12"),
                                                       belcs = c("HEG", "HEW"))  
 png(paste0(path_output, "ta_mm_box_combined_indv.png"), 
@@ -185,8 +231,16 @@ pr_mm_box_combined
 graphics.off()
 
 
+ta_mm_extremes_fit <- fevd(df_met_m_nd$P_RT_NRT[!is.na(df_met_m_nd$P_RT_NRT) &
+                                                  df_met_m_nd$g_belc == "HEG" &
+                                                  df_met_m_nd$g_m == "07"], 
+                           time.units = "months",  units = "mm")
+ta_mm_extremes_fit
+plot(ta_mm_extremes_fit)
+
+
 pr_mm_box_combined_indv <- be_plot_pr_mm_box_combined_indv(data = df_met_m_nd, title = NULL, notch = FALSE,
-                                plotIDs = c("HEG31"),
+                                plotIDs = c("HEG19"),
                                 belcs = c("HEG", "HET")) 
 png(paste0(path_output, "pr_mm_box_combined_indv.png"), 
     width = 1024 * 7, 
@@ -209,7 +263,7 @@ graphics.off()
 
 
 pr_mm_ds_box_combined_indv <- be_plot_pr_mm_ds_box_combined_indv(data = df_met_m_nd, title = NULL, notch = TRUE,
-                                   plotIDs = c("HEG31"),
+                                   plotIDs = c("HEG19"),
                                    belcs = c("HEG", "HET")) 
 png(paste0(path_output, "pr_mm_ds_box_combined_indv.png"), 
     width = 1024 * 7, 
