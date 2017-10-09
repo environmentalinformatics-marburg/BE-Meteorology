@@ -1,0 +1,1515 @@
+plots:	304
+in region:	Exploratories
+
+1. plot:	AEG01
+category:	Schwäbische Alb Grünland
+Latitude:	48.3980050128
+Longitude:	9.3419867529
+
+2. plot:	AEG02
+category:	Schwäbische Alb Grünland
+Latitude:	48.3768572731
+Longitude:	9.4727841247
+
+3. plot:	AEG03
+category:	Schwäbische Alb Grünland
+Latitude:	48.4088814832
+Longitude:	9.5323787503
+
+4. plot:	AEG04
+category:	Schwäbische Alb Grünland
+Latitude:	48.3808884549
+Longitude:	9.4188891246
+
+5. plot:	AEG05
+category:	Schwäbische Alb Grünland
+Latitude:	48.3958758627
+Longitude:	9.4392007081
+
+6. plot:	AEG06
+category:	Schwäbische Alb Grünland
+Latitude:	48.401262153
+Longitude:	9.4416781078
+
+7. plot:	AEG07
+category:	Schwäbische Alb Grünland
+Latitude:	48.3914209811
+Longitude:	9.3768471301
+
+8. plot:	AEG08
+category:	Schwäbische Alb Grünland
+Latitude:	48.4226402847
+Longitude:	9.4921245872
+
+9. plot:	AEG09
+category:	Schwäbische Alb Grünland
+Latitude:	48.3946709269
+Longitude:	9.5027923796
+
+10. plot:	AEG10
+category:	Schwäbische Alb Grünland
+Latitude:	48.3787128703
+Longitude:	9.2126008478
+
+11. plot:	AEG11
+category:	Schwäbische Alb Grünland
+Latitude:	48.4853987987
+Longitude:	9.3477155235
+
+12. plot:	AEG12
+category:	Schwäbische Alb Grünland
+Latitude:	48.3891220871
+Longitude:	9.3502309279
+
+13. plot:	AEG13
+category:	Schwäbische Alb Grünland
+Latitude:	48.3916479693
+Longitude:	9.3621982699
+
+14. plot:	AEG14
+category:	Schwäbische Alb Grünland
+Latitude:	48.3757600015
+Longitude:	9.5186692771
+
+15. plot:	AEG15
+category:	Schwäbische Alb Grünland
+Latitude:	48.487881799
+Longitude:	9.4486539191
+
+16. plot:	AEG16
+category:	Schwäbische Alb Grünland
+Latitude:	48.40210764
+Longitude:	9.4554611349
+
+17. plot:	AEG17
+category:	Schwäbische Alb Grünland
+Latitude:	48.3993230386
+Longitude:	9.5183688727
+
+18. plot:	AEG18
+category:	Schwäbische Alb Grünland
+Latitude:	48.3829418675
+Longitude:	9.5214424368
+
+19. plot:	AEG19
+category:	Schwäbische Alb Grünland
+Latitude:	48.39764314
+Longitude:	9.4473185834
+
+20. plot:	AEG20
+category:	Schwäbische Alb Grünland
+Latitude:	48.4895088831
+Longitude:	9.3564020806
+
+21. plot:	AEG21
+category:	Schwäbische Alb Grünland
+Latitude:	48.4422038842
+Longitude:	9.3572193006
+
+22. plot:	AEG22
+category:	Schwäbische Alb Grünland
+Latitude:	48.4043813138
+Longitude:	9.5134230403
+
+23. plot:	AEG23
+category:	Schwäbische Alb Grünland
+Latitude:	48.4189546956
+Longitude:	9.512354055
+
+24. plot:	AEG24
+category:	Schwäbische Alb Grünland
+Latitude:	48.3964648774
+Longitude:	9.4934922481
+
+25. plot:	AEG25
+category:	Schwäbische Alb Grünland
+Latitude:	48.3954780011
+Longitude:	9.2595965836
+
+26. plot:	AEG26
+category:	Schwäbische Alb Grünland
+Latitude:	48.3951061598
+Longitude:	9.4038818301
+
+27. plot:	AEG27
+category:	Schwäbische Alb Grünland
+Latitude:	48.4191396371
+Longitude:	9.4799316588
+
+28. plot:	AEG28
+category:	Schwäbische Alb Grünland
+Latitude:	48.4620734674
+Longitude:	9.492303341
+
+29. plot:	AEG29
+category:	Schwäbische Alb Grünland
+Latitude:	48.4168404068
+Longitude:	9.358324659
+
+30. plot:	AEG30
+category:	Schwäbische Alb Grünland
+Latitude:	48.4562378064
+Longitude:	9.4572977908
+
+31. plot:	AEG31
+category:	Schwäbische Alb Grünland
+Latitude:	48.4587449338
+Longitude:	9.4600244612
+
+32. plot:	AEG32
+category:	Schwäbische Alb Grünland
+Latitude:	48.4658332639
+Longitude:	9.485781341
+
+33. plot:	AEG33
+category:	Schwäbische Alb Grünland
+Latitude:	48.4514222421
+Longitude:	9.4910511483
+
+34. plot:	AEG34
+category:	Schwäbische Alb Grünland
+Latitude:	48.4558776829
+Longitude:	9.5005580665
+
+35. plot:	AEG35
+category:	Schwäbische Alb Grünland
+Latitude:	48.4808866615
+Longitude:	9.2884387238
+
+36. plot:	AEG36
+category:	Schwäbische Alb Grünland
+Latitude:	48.4781611668
+Longitude:	9.2992438253
+
+37. plot:	AEG37
+category:	Schwäbische Alb Grünland
+Latitude:	48.3961509361
+Longitude:	9.4135454726
+
+38. plot:	AEG38
+category:	Schwäbische Alb Grünland
+Latitude:	48.4395441364
+Longitude:	9.4252511339
+
+39. plot:	AEG39
+category:	Schwäbische Alb Grünland
+Latitude:	48.3942180774
+Longitude:	9.4256829259
+
+40. plot:	AEG40
+category:	Schwäbische Alb Grünland
+Latitude:	48.4097972087
+Longitude:	9.5665626636
+
+41. plot:	AEG41
+category:	Schwäbische Alb Grünland
+Latitude:	48.3699446079
+Longitude:	9.3984861338
+
+42. plot:	AEG42
+category:	Schwäbische Alb Grünland
+Latitude:	48.3979885716
+Longitude:	9.3760179249
+
+43. plot:	AEG43
+category:	Schwäbische Alb Grünland
+Latitude:	48.4134228471
+Longitude:	9.5420173244
+
+44. plot:	AEG44
+category:	Schwäbische Alb Grünland
+Latitude:	48.3779957932
+Longitude:	9.4349969019
+
+45. plot:	AEG45
+category:	Schwäbische Alb Grünland
+Latitude:	48.4013333334
+Longitude:	9.4579527081
+
+46. plot:	AEG46
+category:	Schwäbische Alb Grünland
+Latitude:	48.3969714231
+Longitude:	9.4348888005
+
+47. plot:	AEG47
+category:	Schwäbische Alb Grünland
+Latitude:	48.4192307705
+Longitude:	9.446157209
+
+48. plot:	AEG48
+category:	Schwäbische Alb Grünland
+Latitude:	48.4218476697
+Longitude:	9.4986696758
+
+49. plot:	AEG49
+category:	Schwäbische Alb Grünland
+Latitude:	48.4567591994
+Longitude:	9.5046227699
+
+50. plot:	AEG50
+category:	Schwäbische Alb Grünland
+Latitude:	48.4056558727
+Longitude:	9.4676487349
+
+51. plot:	AET06
+category:	Schwäbische Alb Wald
+
+52. plot:	AEW01
+category:	Schwäbische Alb Wald
+Latitude:	48.478073165
+Longitude:	9.334410162
+
+53. plot:	AEW02
+category:	Schwäbische Alb Wald
+Latitude:	48.3799904765
+Longitude:	9.3514506421
+
+54. plot:	AEW03
+category:	Schwäbische Alb Wald
+Latitude:	48.4122625017
+Longitude:	9.355590784
+
+55. plot:	AEW04
+category:	Schwäbische Alb Wald
+Latitude:	48.3990986481
+Longitude:	9.2448273429
+
+56. plot:	AEW05
+category:	Schwäbische Alb Wald
+Latitude:	48.4196184682
+Longitude:	9.4146817957
+
+57. plot:	AEW06
+category:	Schwäbische Alb Wald
+Latitude:	48.3940513182
+Longitude:	9.4459367075
+
+58. plot:	AEW07
+category:	Schwäbische Alb Wald
+Latitude:	48.3962384103
+Longitude:	9.2613559815
+
+59. plot:	AEW08
+category:	Schwäbische Alb Wald
+Latitude:	48.3825895508
+Longitude:	9.3823844929
+
+60. plot:	AEW09
+category:	Schwäbische Alb Wald
+Latitude:	48.3693457637
+Longitude:	9.4152176233
+
+61. plot:	AEW10
+category:	Schwäbische Alb Wald
+Latitude:	48.3777869241
+Longitude:	9.3931477757
+
+62. plot:	AEW11
+category:	Schwäbische Alb Wald
+Latitude:	48.4915951512
+Longitude:	9.3197522888
+
+63. plot:	AEW12
+category:	Schwäbische Alb Wald
+Latitude:	48.3694616359
+Longitude:	9.2513658515
+
+64. plot:	AEW13
+category:	Schwäbische Alb Wald
+Latitude:	48.3789099752
+Longitude:	9.3986777067
+
+65. plot:	AEW14
+category:	Schwäbische Alb Wald
+Latitude:	48.3755620401
+Longitude:	9.337759582
+
+66. plot:	AEW15
+category:	Schwäbische Alb Wald
+Latitude:	48.3894672795
+Longitude:	9.4065105777
+
+67. plot:	AEW16
+category:	Schwäbische Alb Wald
+Latitude:	48.3861424622
+Longitude:	9.4446523886
+
+68. plot:	AEW17
+category:	Schwäbische Alb Wald
+Latitude:	48.3964586199
+Longitude:	9.2429915954
+
+69. plot:	AEW18
+category:	Schwäbische Alb Wald
+Latitude:	48.36500227
+Longitude:	9.2337993934
+
+70. plot:	AEW19
+category:	Schwäbische Alb Wald
+Latitude:	48.4842445665
+Longitude:	9.3111837565
+
+71. plot:	AEW20
+category:	Schwäbische Alb Wald
+Latitude:	48.3701037561
+Longitude:	9.3187195033
+
+72. plot:	AEW21
+category:	Schwäbische Alb Wald
+Latitude:	48.4843968668
+Longitude:	9.3211949623
+
+73. plot:	AEW22
+category:	Schwäbische Alb Wald
+Latitude:	48.3823072372
+Longitude:	9.4526381407
+
+74. plot:	AEW23
+category:	Schwäbische Alb Wald
+Latitude:	48.3858317363
+Longitude:	9.4879752912
+
+75. plot:	AEW24
+category:	Schwäbische Alb Wald
+Latitude:	48.4789820525
+Longitude:	9.2947850994
+
+76. plot:	AEW25
+category:	Schwäbische Alb Wald
+Latitude:	48.475891201
+Longitude:	9.4209567168
+
+77. plot:	AEW26
+category:	Schwäbische Alb Wald
+Latitude:	48.417462913
+Longitude:	9.4381710237
+
+78. plot:	AEW27
+category:	Schwäbische Alb Wald
+Latitude:	48.4002326117
+Longitude:	9.4743515014
+
+79. plot:	AEW28
+category:	Schwäbische Alb Wald
+Latitude:	48.4923546666
+Longitude:	9.3050099068
+
+80. plot:	AEW29
+category:	Schwäbische Alb Wald
+Latitude:	48.3836617112
+Longitude:	9.3566062224
+
+81. plot:	AEW30
+category:	Schwäbische Alb Wald
+Latitude:	48.3727333655
+Longitude:	9.3713773469
+
+82. plot:	AEW31
+category:	Schwäbische Alb Wald
+Latitude:	48.3811404452
+Longitude:	9.2568234938
+
+83. plot:	AEW32
+category:	Schwäbische Alb Wald
+Latitude:	48.4105199182
+Longitude:	9.3663848487
+
+84. plot:	AEW33
+category:	Schwäbische Alb Wald
+Latitude:	48.3911719491
+Longitude:	9.490470405
+
+85. plot:	AEW34
+category:	Schwäbische Alb Wald
+Latitude:	48.3911487688
+Longitude:	9.4958712598
+
+86. plot:	AEW35
+category:	Schwäbische Alb Wald
+Latitude:	48.4456961992
+Longitude:	9.4151647193
+
+87. plot:	AEW36
+category:	Schwäbische Alb Wald
+Latitude:	48.3804016572
+Longitude:	9.2230702498
+
+88. plot:	AEW37
+category:	Schwäbische Alb Wald
+Latitude:	48.392098933
+Longitude:	9.4391681555
+
+89. plot:	AEW38
+category:	Schwäbische Alb Wald
+Latitude:	48.3829918802
+Longitude:	9.4454349383
+
+90. plot:	AEW39
+category:	Schwäbische Alb Wald
+Latitude:	48.3757882361
+Longitude:	9.2365486248
+
+91. plot:	AEW40
+category:	Schwäbische Alb Wald
+Latitude:	48.499602234
+Longitude:	9.3494366049
+
+92. plot:	AEW41
+category:	Schwäbische Alb Wald
+Latitude:	48.3644121378
+Longitude:	9.4041380519
+
+93. plot:	AEW42
+category:	Schwäbische Alb Wald
+Latitude:	48.3960932296
+Longitude:	9.4527065741
+
+94. plot:	AEW43
+category:	Schwäbische Alb Wald
+Latitude:	48.3790957789
+Longitude:	9.3783084379
+
+95. plot:	AEW44
+category:	Schwäbische Alb Wald
+Latitude:	48.3857074703
+Longitude:	9.223093501
+
+96. plot:	AEW45
+category:	Schwäbische Alb Wald
+Latitude:	48.3892368857
+Longitude:	9.5012535366
+
+97. plot:	AEW46
+category:	Schwäbische Alb Wald
+Latitude:	48.3862612052
+Longitude:	9.3593246896
+
+98. plot:	AEW47
+category:	Schwäbische Alb Wald
+Latitude:	48.4167020413
+Longitude:	9.4079033192
+
+99. plot:	AEW48
+category:	Schwäbische Alb Wald
+Latitude:	48.388458367
+Longitude:	9.4727567005
+
+100. plot:	AEW49
+category:	Schwäbische Alb Wald
+Latitude:	48.4453687526
+Longitude:	9.4763942883
+
+101. plot:	AEW50
+category:	Schwäbische Alb Wald
+Latitude:	48.3921171677
+Longitude:	9.2544483408
+
+102. plot:	HEG01
+category:	Hainich-Dün Grünland
+Latitude:	50.9716483376
+Longitude:	10.4053629104
+
+103. plot:	HEG02
+category:	Hainich-Dün Grünland
+Latitude:	51.0007489248
+Longitude:	10.4300100103
+
+104. plot:	HEG03
+category:	Hainich-Dün Grünland
+Latitude:	50.9980914934
+Longitude:	10.4329488763
+
+105. plot:	HEG04
+category:	Hainich-Dün Grünland
+Latitude:	51.113362352
+Longitude:	10.4361803786
+
+106. plot:	HEG05
+category:	Hainich-Dün Grünland
+Latitude:	51.2158944134
+Longitude:	10.322526719
+
+107. plot:	HEG06
+category:	Hainich-Dün Grünland
+Latitude:	51.2149350553
+Longitude:	10.3912208733
+
+108. plot:	HEG07
+category:	Hainich-Dün Grünland
+Latitude:	51.2735825557
+Longitude:	10.4104125695
+
+109. plot:	HEG08
+category:	Hainich-Dün Grünland
+Latitude:	51.2712574671
+Longitude:	10.4179445812
+
+110. plot:	HEG09
+category:	Hainich-Dün Grünland
+Latitude:	51.2238973736
+Longitude:	10.3807872979
+
+111. plot:	HEG10
+category:	Hainich-Dün Grünland
+Latitude:	51.2751490188
+Longitude:	10.4467607106
+
+112. plot:	HEG11
+category:	Hainich-Dün Grünland
+Latitude:	51.2806670523
+Longitude:	10.4561779278
+
+113. plot:	HEG12
+category:	Hainich-Dün Grünland
+Latitude:	51.0772200104
+Longitude:	10.5758197075
+
+114. plot:	HEG13
+category:	Hainich-Dün Grünland
+Latitude:	51.2596811245
+Longitude:	10.3799460956
+
+115. plot:	HEG14
+category:	Hainich-Dün Grünland
+Latitude:	51.2940601984
+Longitude:	10.4357998366
+
+116. plot:	HEG15
+category:	Hainich-Dün Grünland
+Latitude:	51.0680130317
+Longitude:	10.4862323114
+
+117. plot:	HEG16
+category:	Hainich-Dün Grünland
+Latitude:	51.0334951155
+Longitude:	10.4588433406
+
+118. plot:	HEG17
+category:	Hainich-Dün Grünland
+Latitude:	51.070504549
+Longitude:	10.4704560664
+
+119. plot:	HEG18
+category:	Hainich-Dün Grünland
+Latitude:	51.2836635589
+Longitude:	10.4246855814
+
+120. plot:	HEG19
+category:	Hainich-Dün Grünland
+Latitude:	51.0732375079
+Longitude:	10.4732197941
+
+121. plot:	HEG20
+category:	Hainich-Dün Grünland
+Latitude:	51.2210645074
+Longitude:	10.370980806
+
+122. plot:	HEG21
+category:	Hainich-Dün Grünland
+Latitude:	51.1907043424
+Longitude:	10.7525686959
+
+123. plot:	HEG22
+category:	Hainich-Dün Grünland
+Latitude:	51.0307536694
+Longitude:	10.3249271584
+
+124. plot:	HEG23
+category:	Hainich-Dün Grünland
+Latitude:	51.1343049651
+Longitude:	10.3381864542
+
+125. plot:	HEG24
+category:	Hainich-Dün Grünland
+Latitude:	51.101066362
+Longitude:	10.3512145548
+
+126. plot:	HEG25
+category:	Hainich-Dün Grünland
+Latitude:	51.0233900146
+Longitude:	10.322341733
+
+127. plot:	HEG26
+category:	Hainich-Dün Grünland
+Latitude:	51.281500899
+Longitude:	10.3717252509
+
+128. plot:	HEG27
+category:	Hainich-Dün Grünland
+Latitude:	51.0864472749
+Longitude:	10.5969886442
+
+129. plot:	HEG28
+category:	Hainich-Dün Grünland
+Latitude:	51.265906526
+Longitude:	10.4969215328
+
+130. plot:	HEG29
+category:	Hainich-Dün Grünland
+Latitude:	51.2641100338
+Longitude:	10.4984272508
+
+131. plot:	HEG30
+category:	Hainich-Dün Grünland
+Latitude:	51.2018524729
+Longitude:	10.3599108538
+
+132. plot:	HEG31
+category:	Hainich-Dün Grünland
+Latitude:	51.1703585041
+Longitude:	10.2211956781
+
+133. plot:	HEG32
+category:	Hainich-Dün Grünland
+Latitude:	51.075510637
+Longitude:	10.5676100811
+
+134. plot:	HEG33
+category:	Hainich-Dün Grünland
+Latitude:	51.1114363932
+Longitude:	10.4259631657
+
+135. plot:	HEG34
+category:	Hainich-Dün Grünland
+Latitude:	51.2142917637
+Longitude:	10.3869351606
+
+136. plot:	HEG35
+category:	Hainich-Dün Grünland
+Latitude:	51.219827364
+Longitude:	10.4111191881
+
+137. plot:	HEG36
+category:	Hainich-Dün Grünland
+Latitude:	51.0314465615
+Longitude:	10.510233429
+
+138. plot:	HEG37
+category:	Hainich-Dün Grünland
+Latitude:	51.032390748
+Longitude:	10.5144943419
+
+139. plot:	HEG38
+category:	Hainich-Dün Grünland
+Latitude:	51.1162026908
+Longitude:	10.3415352077
+
+140. plot:	HEG39
+category:	Hainich-Dün Grünland
+Latitude:	51.1202248042
+Longitude:	10.3462476695
+
+141. plot:	HEG40
+category:	Hainich-Dün Grünland
+Latitude:	50.9668129807
+Longitude:	10.4468140957
+
+142. plot:	HEG41
+category:	Hainich-Dün Grünland
+Latitude:	51.221025855
+Longitude:	10.3669167564
+
+143. plot:	HEG42
+category:	Hainich-Dün Grünland
+Latitude:	51.0694413682
+Longitude:	10.4647839624
+
+144. plot:	HEG43
+category:	Hainich-Dün Grünland
+Latitude:	51.3019709052
+Longitude:	10.4358178074
+
+145. plot:	HEG44
+category:	Hainich-Dün Grünland
+Latitude:	51.0551983135
+Longitude:	10.4796324688
+
+146. plot:	HEG45
+category:	Hainich-Dün Grünland
+Latitude:	51.0395333994
+Longitude:	10.5085340367
+
+147. plot:	HEG46
+category:	Hainich-Dün Grünland
+Latitude:	51.2068950614
+Longitude:	10.7535482021
+
+148. plot:	HEG47
+category:	Hainich-Dün Grünland
+Latitude:	51.2842003328
+Longitude:	10.3719165024
+
+149. plot:	HEG48
+category:	Hainich-Dün Grünland
+Latitude:	51.286831328
+Longitude:	10.3801379532
+
+150. plot:	HEG49
+category:	Hainich-Dün Grünland
+Latitude:	51.2789028874
+Longitude:	10.3918830227
+
+151. plot:	HEG50
+category:	Hainich-Dün Grünland
+Latitude:	51.2765094035
+Longitude:	10.4207739499
+
+152. plot:	HET38
+category:	Hainich-Dün Wald
+
+153. plot:	HET44
+category:	Hainich-Dün Wald
+
+154. plot:	HEW01
+category:	Hainich-Dün Wald
+Latitude:	51.185355081
+Longitude:	10.3236211079
+
+155. plot:	HEW02
+category:	Hainich-Dün Wald
+Latitude:	51.2100112945
+Longitude:	10.369953938
+
+156. plot:	HEW03
+category:	Hainich-Dün Wald
+Latitude:	51.2716477029
+Longitude:	10.3107384563
+
+157. plot:	HEW04
+category:	Hainich-Dün Wald
+Latitude:	51.369481558
+Longitude:	10.5333275422
+
+158. plot:	HEW05
+category:	Hainich-Dün Wald
+Latitude:	51.2638781296
+Longitude:	10.2409578716
+
+159. plot:	HEW06
+category:	Hainich-Dün Wald
+Latitude:	51.2677198313
+Longitude:	10.2393782624
+
+160. plot:	HEW07
+category:	Hainich-Dün Wald
+Latitude:	51.131092424
+Longitude:	10.3854488723
+
+161. plot:	HEW08
+category:	Hainich-Dün Wald
+Latitude:	51.3557921769
+Longitude:	10.5169674116
+
+162. plot:	HEW09
+category:	Hainich-Dün Wald
+Latitude:	51.1302419298
+Longitude:	10.3811496502
+
+163. plot:	HEW10
+category:	Hainich-Dün Wald
+Latitude:	51.0899873483
+Longitude:	10.4624338733
+
+164. plot:	HEW11
+category:	Hainich-Dün Wald
+Latitude:	51.1028344425
+Longitude:	10.400854322
+
+165. plot:	HEW12
+category:	Hainich-Dün Wald
+Latitude:	51.1006881001
+Longitude:	10.4551829807
+
+166. plot:	HEW13
+category:	Hainich-Dün Wald
+Latitude:	51.2426439614
+Longitude:	10.3129467075
+
+167. plot:	HEW14
+category:	Hainich-Dün Wald
+Latitude:	51.366163944
+Longitude:	10.2581516944
+
+168. plot:	HEW15
+category:	Hainich-Dün Wald
+Latitude:	51.2050771735
+Longitude:	10.390161909
+
+169. plot:	HEW16
+category:	Hainich-Dün Wald
+Latitude:	51.1831603571
+Longitude:	10.3654658654
+
+170. plot:	HEW17
+category:	Hainich-Dün Wald
+Latitude:	51.282813576
+Longitude:	10.2269038462
+
+171. plot:	HEW18
+category:	Hainich-Dün Wald
+Latitude:	51.3369669282
+Longitude:	10.3654559913
+
+172. plot:	HEW19
+category:	Hainich-Dün Wald
+Latitude:	51.1992291968
+Longitude:	10.3377262691
+
+173. plot:	HEW20
+category:	Hainich-Dün Wald
+Latitude:	51.3339278121
+Longitude:	10.3602545497
+
+174. plot:	HEW21
+category:	Hainich-Dün Wald
+Latitude:	51.1942782958
+Longitude:	10.3190053755
+
+175. plot:	HEW22
+category:	Hainich-Dün Wald
+Latitude:	51.3371502544
+Longitude:	10.3592785389
+
+176. plot:	HEW23
+category:	Hainich-Dün Wald
+Latitude:	51.2782177401
+Longitude:	10.2084480501
+
+177. plot:	HEW24
+category:	Hainich-Dün Wald
+Latitude:	51.0465026853
+Longitude:	10.4912116326
+
+178. plot:	HEW25
+category:	Hainich-Dün Wald
+Latitude:	51.2845669846
+Longitude:	10.2239693692
+
+179. plot:	HEW26
+category:	Hainich-Dün Wald
+Latitude:	51.3443262423
+Longitude:	10.5130315249
+
+180. plot:	HEW27
+category:	Hainich-Dün Wald
+Latitude:	51.3561161433
+Longitude:	10.521263964
+
+181. plot:	HEW28
+category:	Hainich-Dün Wald
+Latitude:	51.358884052
+Longitude:	10.526917886
+
+182. plot:	HEW29
+category:	Hainich-Dün Wald
+Latitude:	51.1275428161
+Longitude:	10.3796868348
+
+183. plot:	HEW30
+category:	Hainich-Dün Wald
+Latitude:	51.134683874
+Longitude:	10.3786368177
+
+184. plot:	HEW31
+category:	Hainich-Dün Wald
+Latitude:	51.1422526286
+Longitude:	10.3773142326
+
+185. plot:	HEW32
+category:	Hainich-Dün Wald
+Latitude:	51.1395282849
+Longitude:	10.3585903186
+
+186. plot:	HEW33
+category:	Hainich-Dün Wald
+Latitude:	51.3415759448
+Longitude:	10.5088148513
+
+187. plot:	HEW34
+category:	Hainich-Dün Wald
+Latitude:	51.0847108328
+Longitude:	10.4542735979
+
+188. plot:	HEW35
+category:	Hainich-Dün Wald
+Latitude:	51.1046899612
+Longitude:	10.4050739485
+
+189. plot:	HEW36
+category:	Hainich-Dün Wald
+Latitude:	51.106275772
+Longitude:	10.4093031658
+
+190. plot:	HEW37
+category:	Hainich-Dün Wald
+Latitude:	51.0844264448
+Longitude:	10.4586076362
+
+191. plot:	HEW38
+category:	Hainich-Dün Wald
+Latitude:	51.0793590584
+Longitude:	10.4601745431
+
+192. plot:	HEW39
+category:	Hainich-Dün Wald
+Latitude:	51.0929539322
+Longitude:	10.4658614642
+
+193. plot:	HEW40
+category:	Hainich-Dün Wald
+Latitude:	51.0799442764
+Longitude:	10.4982588767
+
+194. plot:	HEW41
+category:	Hainich-Dün Wald
+Latitude:	51.1080561853
+Longitude:	10.4549374111
+
+195. plot:	HEW42
+category:	Hainich-Dün Wald
+Latitude:	51.1027539809
+Longitude:	10.4598259195
+
+196. plot:	HEW43
+category:	Hainich-Dün Wald
+Latitude:	51.3320987308
+Longitude:	10.3580238771
+
+197. plot:	HEW44
+category:	Hainich-Dün Wald
+Latitude:	51.3336765716
+Longitude:	10.3680124678
+
+198. plot:	HEW45
+category:	Hainich-Dün Wald
+Latitude:	51.3639605292
+Longitude:	10.2611071882
+
+199. plot:	HEW46
+category:	Hainich-Dün Wald
+Latitude:	51.0480963843
+Longitude:	10.475472469
+
+200. plot:	HEW47
+category:	Hainich-Dün Wald
+Latitude:	51.1789347352
+Longitude:	10.3783438672
+
+201. plot:	HEW48
+category:	Hainich-Dün Wald
+Latitude:	51.1366895595
+Longitude:	10.393698314
+
+202. plot:	HEW49
+category:	Hainich-Dün Wald
+Latitude:	51.1436471085
+Longitude:	10.3845393934
+
+203. plot:	HEW50
+category:	Hainich-Dün Wald
+Latitude:	51.0928168175
+Longitude:	10.4554452066
+
+204. plot:	SEG01
+category:	Schorfheide Grünland
+Latitude:	53.0874201199
+Longitude:	13.969643613
+
+205. plot:	SEG02
+category:	Schorfheide Grünland
+Latitude:	53.0893068994
+Longitude:	13.9800470219
+
+206. plot:	SEG03
+category:	Schorfheide Grünland
+Latitude:	53.1028343078
+Longitude:	13.9856996404
+
+207. plot:	SEG04
+category:	Schorfheide Grünland
+Latitude:	53.1137541932
+Longitude:	14.0018710945
+
+208. plot:	SEG05
+category:	Schorfheide Grünland
+Latitude:	53.1074526576
+Longitude:	14.0005236583
+
+209. plot:	SEG06
+category:	Schorfheide Grünland
+Latitude:	53.1034952652
+Longitude:	13.6228333298
+
+210. plot:	SEG07
+category:	Schorfheide Grünland
+Latitude:	53.0883827434
+Longitude:	13.9770687275
+
+211. plot:	SEG08
+category:	Schorfheide Grünland
+Latitude:	53.1139706829
+Longitude:	14.0170996354
+
+212. plot:	SEG09
+category:	Schorfheide Grünland
+Latitude:	53.0981819341
+Longitude:	13.6125669145
+
+213. plot:	SEG10
+category:	Schorfheide Grünland
+Latitude:	53.1066189775
+Longitude:	13.9975565113
+
+214. plot:	SEG11
+category:	Schorfheide Grünland
+Latitude:	53.1055917908
+Longitude:	13.9929664034
+
+215. plot:	SEG12
+category:	Schorfheide Grünland
+Latitude:	53.0873902852
+Longitude:	13.9651666142
+
+216. plot:	SEG13
+category:	Schorfheide Grünland
+Latitude:	52.9729737541
+Longitude:	13.8190368943
+
+217. plot:	SEG14
+category:	Schorfheide Grünland
+Latitude:	53.0866128921
+Longitude:	13.9802599328
+
+218. plot:	SEG15
+category:	Schorfheide Grünland
+Latitude:	53.1094117133
+Longitude:	14.0091395643
+
+219. plot:	SEG16
+category:	Schorfheide Grünland
+Latitude:	53.1155376108
+Longitude:	13.9991563761
+
+220. plot:	SEG17
+category:	Schorfheide Grünland
+Latitude:	53.098328709
+Longitude:	13.6259992127
+
+221. plot:	SEG18
+category:	Schorfheide Grünland
+Latitude:	53.1373051619
+Longitude:	13.8756098085
+
+222. plot:	SEG19
+category:	Schorfheide Grünland
+Latitude:	53.12451684
+Longitude:	14.0090911662
+
+223. plot:	SEG20
+category:	Schorfheide Grünland
+Latitude:	53.1035166861
+Longitude:	13.6153816683
+
+224. plot:	SEG21
+category:	Schorfheide Grünland
+Latitude:	53.1062437745
+Longitude:	13.6111129329
+
+225. plot:	SEG22
+category:	Schorfheide Grünland
+Latitude:	53.1008363304
+Longitude:	13.9738023393
+
+226. plot:	SEG23
+category:	Schorfheide Grünland
+Latitude:	53.1076629229
+Longitude:	14.0259043152
+
+227. plot:	SEG24
+category:	Schorfheide Grünland
+Latitude:	53.0930375778
+Longitude:	13.9960806945
+
+228. plot:	SEG25
+category:	Schorfheide Grünland
+Latitude:	53.1106282851
+Longitude:	13.6179908205
+
+229. plot:	SEG26
+category:	Schorfheide Grünland
+Latitude:	53.1058313536
+Longitude:	14.0184348694
+
+230. plot:	SEG27
+category:	Schorfheide Grünland
+Latitude:	53.1227841103
+Longitude:	13.7073809813
+
+231. plot:	SEG28
+category:	Schorfheide Grünland
+Latitude:	53.0931214508
+Longitude:	14.0060802647
+
+232. plot:	SEG29
+category:	Schorfheide Grünland
+Latitude:	53.090363765
+Longitude:	13.9986953531
+
+233. plot:	SEG30
+category:	Schorfheide Grünland
+Latitude:	53.1481412744
+Longitude:	13.8306804543
+
+234. plot:	SEG31
+category:	Schorfheide Grünland
+Latitude:	53.1490864835
+Longitude:	13.8354379183
+
+235. plot:	SEG32
+category:	Schorfheide Grünland
+Latitude:	53.1519292507
+Longitude:	13.832087364
+
+236. plot:	SEG33
+category:	Schorfheide Grünland
+Latitude:	52.9857854702
+Longitude:	13.8425129961
+
+237. plot:	SEG34
+category:	Schorfheide Grünland
+Latitude:	52.9831350747
+Longitude:	13.8471996774
+
+238. plot:	SEG35
+category:	Schorfheide Grünland
+Latitude:	52.980270272
+Longitude:	13.8483181227
+
+239. plot:	SEG36
+category:	Schorfheide Grünland
+Latitude:	52.9869062127
+Longitude:	13.8376434069
+
+240. plot:	SEG37
+category:	Schorfheide Grünland
+Latitude:	53.1349278101
+Longitude:	13.8760304642
+
+241. plot:	SEG38
+category:	Schorfheide Grünland
+Latitude:	53.1157329748
+Longitude:	13.6757639408
+
+242. plot:	SEG39
+category:	Schorfheide Grünland
+Latitude:	52.9809239074
+Longitude:	13.8232869643
+
+243. plot:	SEG40
+category:	Schorfheide Grünland
+Latitude:	53.1157000428
+Longitude:	13.8406712422
+
+244. plot:	SEG41
+category:	Schorfheide Grünland
+Latitude:	53.1221932473
+Longitude:	13.8523423904
+
+245. plot:	SEG42
+category:	Schorfheide Grünland
+Latitude:	52.8706731952
+Longitude:	13.9688288888
+
+246. plot:	SEG43
+category:	Schorfheide Grünland
+Latitude:	52.876577569
+Longitude:	13.9678274355
+
+247. plot:	SEG44
+category:	Schorfheide Grünland
+Latitude:	52.8800593338
+Longitude:	13.9651898491
+
+248. plot:	SEG45
+category:	Schorfheide Grünland
+Latitude:	52.8814555267
+Longitude:	13.9593929333
+
+249. plot:	SEG46
+category:	Schorfheide Grünland
+Latitude:	52.9784378063
+Longitude:	13.8263321419
+
+250. plot:	SEG47
+category:	Schorfheide Grünland
+Latitude:	52.9872657751
+Longitude:	13.827582102
+
+251. plot:	SEG48
+category:	Schorfheide Grünland
+Latitude:	53.09720511
+Longitude:	13.6066414018
+
+252. plot:	SEG49
+category:	Schorfheide Grünland
+Latitude:	52.9747334907
+Longitude:	13.8565786823
+
+253. plot:	SEG50
+category:	Schorfheide Grünland
+Latitude:	53.1217783222
+Longitude:	13.7503876671
+
+254. plot:	SET39
+category:	Schorfheide Wald
+
+255. plot:	SEW01
+category:	Schorfheide Wald
+Latitude:	52.9008472902
+Longitude:	13.8463669499
+
+256. plot:	SEW02
+category:	Schorfheide Wald
+Latitude:	52.951728864
+Longitude:	13.778028117
+
+257. plot:	SEW03
+category:	Schorfheide Wald
+Latitude:	52.9207074362
+Longitude:	13.6430016042
+
+258. plot:	SEW04
+category:	Schorfheide Wald
+Latitude:	52.9173466307
+Longitude:	13.8473113725
+
+259. plot:	SEW05
+category:	Schorfheide Wald
+Latitude:	53.0570335601
+Longitude:	13.8853662276
+
+260. plot:	SEW06
+category:	Schorfheide Wald
+Latitude:	52.907442793
+Longitude:	13.8416880472
+
+261. plot:	SEW07
+category:	Schorfheide Wald
+Latitude:	53.1073480195
+Longitude:	13.6944189332
+
+262. plot:	SEW08
+category:	Schorfheide Wald
+Latitude:	53.1917971616
+Longitude:	13.9303378591
+
+263. plot:	SEW09
+category:	Schorfheide Wald
+Latitude:	53.044586875
+Longitude:	13.8101029479
+
+264. plot:	SEW10
+category:	Schorfheide Wald
+Latitude:	53.0910959427
+Longitude:	13.637843132
+
+265. plot:	SEW11
+category:	Schorfheide Wald
+Latitude:	53.0902936541
+Longitude:	13.6337037671
+
+266. plot:	SEW12
+category:	Schorfheide Wald
+Latitude:	53.0883300835
+Longitude:	13.6982632545
+
+267. plot:	SEW13
+category:	Schorfheide Wald
+Latitude:	53.0163657036
+Longitude:	13.8639279627
+
+268. plot:	SEW14
+category:	Schorfheide Wald
+Latitude:	52.9179136611
+Longitude:	13.7521735271
+
+269. plot:	SEW15
+category:	Schorfheide Wald
+Latitude:	52.914542078
+Longitude:	13.7375525556
+
+270. plot:	SEW16
+category:	Schorfheide Wald
+Latitude:	53.0765831695
+Longitude:	13.8639856255
+
+271. plot:	SEW17
+category:	Schorfheide Wald
+Latitude:	52.9423507679
+Longitude:	13.8274870493
+
+272. plot:	SEW18
+category:	Schorfheide Wald
+Latitude:	52.8624230856
+Longitude:	13.9172479943
+
+273. plot:	SEW19
+category:	Schorfheide Wald
+Latitude:	53.0939848778
+Longitude:	13.6350797244
+
+274. plot:	SEW20
+category:	Schorfheide Wald
+Latitude:	53.0886055083
+Longitude:	13.6353842203
+
+275. plot:	SEW21
+category:	Schorfheide Wald
+Latitude:	52.9155883093
+Longitude:	13.740450917
+
+276. plot:	SEW22
+category:	Schorfheide Wald
+Latitude:	53.0601385484
+Longitude:	13.9140747207
+
+277. plot:	SEW23
+category:	Schorfheide Wald
+Latitude:	52.9489729846
+Longitude:	13.7791918682
+
+278. plot:	SEW24
+category:	Schorfheide Wald
+Latitude:	52.8897190116
+Longitude:	13.9671737446
+
+279. plot:	SEW25
+category:	Schorfheide Wald
+Latitude:	52.9209815366
+Longitude:	13.7610957942
+
+280. plot:	SEW26
+category:	Schorfheide Wald
+Latitude:	52.9174012798
+Longitude:	13.7461817871
+
+281. plot:	SEW27
+category:	Schorfheide Wald
+Latitude:	52.8899546096
+Longitude:	14.0010438422
+
+282. plot:	SEW28
+category:	Schorfheide Wald
+Latitude:	52.883956729
+Longitude:	13.6640414169
+
+283. plot:	SEW29
+category:	Schorfheide Wald
+Latitude:	53.0172391815
+Longitude:	13.8622360487
+
+284. plot:	SEW30
+category:	Schorfheide Wald
+Latitude:	53.06213691
+Longitude:	13.9223631143
+
+285. plot:	SEW31
+category:	Schorfheide Wald
+Latitude:	52.8810775398
+Longitude:	13.9033696983
+
+286. plot:	SEW32
+category:	Schorfheide Wald
+Latitude:	53.0627722974
+Longitude:	13.9270461979
+
+287. plot:	SEW33
+category:	Schorfheide Wald
+Latitude:	52.9150420243
+Longitude:	13.8874377589
+
+288. plot:	SEW34
+category:	Schorfheide Wald
+Latitude:	52.8958258919
+Longitude:	13.8521470181
+
+289. plot:	SEW35
+category:	Schorfheide Wald
+Latitude:	52.9112679466
+Longitude:	13.8534187775
+
+290. plot:	SEW36
+category:	Schorfheide Wald
+Latitude:	52.9513641654
+Longitude:	13.7541425496
+
+291. plot:	SEW37
+category:	Schorfheide Wald
+Latitude:	52.9400215749
+Longitude:	13.7826121483
+
+292. plot:	SEW38
+category:	Schorfheide Wald
+Latitude:	52.8884802265
+Longitude:	13.6707369457
+
+293. plot:	SEW39
+category:	Schorfheide Wald
+Latitude:	52.9247557336
+Longitude:	13.8664454739
+
+294. plot:	SEW40
+category:	Schorfheide Wald
+Latitude:	52.9147687623
+Longitude:	13.8623651461
+
+295. plot:	SEW41
+category:	Schorfheide Wald
+Latitude:	52.9122938399
+Longitude:	13.9099253483
+
+296. plot:	SEW42
+category:	Schorfheide Wald
+Latitude:	52.9027475084
+Longitude:	13.9145343372
+
+297. plot:	SEW43
+category:	Schorfheide Wald
+Latitude:	52.9009765233
+Longitude:	13.9283255647
+
+298. plot:	SEW44
+category:	Schorfheide Wald
+Latitude:	52.9184590159
+Longitude:	13.859220603
+
+299. plot:	SEW45
+category:	Schorfheide Wald
+Latitude:	53.0454545169
+Longitude:	13.8378888408
+
+300. plot:	SEW46
+category:	Schorfheide Wald
+Latitude:	53.0721224497
+Longitude:	13.7774439698
+
+301. plot:	SEW47
+category:	Schorfheide Wald
+Latitude:	53.0712780629
+Longitude:	13.7713654294
+
+302. plot:	SEW48
+category:	Schorfheide Wald
+Latitude:	53.0512659201
+Longitude:	13.8449953984
+
+303. plot:	SEW49
+category:	Schorfheide Wald
+Latitude:	52.885260427
+Longitude:	13.8912306282
+
+304. plot:	SEW50
+category:	Schorfheide Wald
+Latitude:	53.039528434
+Longitude:	13.7870431421
+

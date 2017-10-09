@@ -3,9 +3,9 @@ library(ggplot2)
 library(reshape2)
 
 
-path_source <- "/home/dogbert/paper_be_meteorology/src/"
-path_data <- "/home/dogbert/Desktop/haensel_2016_be_klima/data/"
-path_output <- "/home/dogbert/Desktop/haensel_2016_be_klima/output/"
+path_source <- ".../paper_be_meteorology/src/"
+path_data <- ".../paper_be_meteorology/data/"
+path_output <- ".../paper_be_meteorology/output/"
 
 source(paste0(path_source, "be_deseason.R"))
 source(paste0(path_source, "be_io_lui.R"))
@@ -40,7 +40,7 @@ path_A_a = "http://137.248.191.219:8080/tsdb/query_csv?plot=AEG01&plot=AEG02&plo
 path_S_m = "http://137.248.191.219:8080/tsdb/query_csv?plot=SEG01&plot=SEG02&plot=SEG03&plot=SEG04&plot=SEG05&plot=SEG06&plot=SEG07&plot=SEG08&plot=SEG09&plot=SEG10&plot=SEG11&plot=SEG12&plot=SEG13&plot=SEG14&plot=SEG15&plot=SEG16&plot=SEG17&plot=SEG18&plot=SEG19&plot=SEG20&plot=SEG21&plot=SEG22&plot=SEG23&plot=SEG24&plot=SEG25&plot=SEG26&plot=SEG27&plot=SEG28&plot=SEG29&plot=SEG30&plot=SEG31&plot=SEG32&plot=SEG33&plot=SEG34&plot=SEG35&plot=SEG36&plot=SEG37&plot=SEG38&plot=SEG39&plot=SEG40&plot=SEG41&plot=SEG42&plot=SEG43&plot=SEG44&plot=SEG45&plot=SEG46&plot=SEG47&plot=SEG48&plot=SEG49&plot=SEG50&plot=SEW01&plot=SEW02&plot=SEW03&plot=SEW04&plot=SEW05&plot=SEW06&plot=SEW07&plot=SEW08&plot=SEW09&plot=SEW10&plot=SEW11&plot=SEW12&plot=SEW13&plot=SEW14&plot=SEW15&plot=SEW16&plot=SEW17&plot=SEW18&plot=SEW19&plot=SEW20&plot=SEW21&plot=SEW22&plot=SEW23&plot=SEW24&plot=SEW25&plot=SEW26&plot=SEW27&plot=SEW28&plot=SEW29&plot=SEW30&plot=SEW31&plot=SEW32&plot=SEW33&plot=SEW34&plot=SEW35&plot=SEW36&plot=SEW37&plot=SEW38&plot=SEW39&plot=SEW40&plot=SEW41&plot=SEW42&plot=SEW43&plot=SEW44&plot=SEW45&plot=SEW46&plot=SEW47&plot=SEW48&plot=SEW49&plot=SEW50&sensor=P_RT_NRT&sensor=P_RT_NRT_01&sensor=P_RT_NRT_02&sensor=rH_200&sensor=Ta_200&sensor=Ta_200_max&sensor=Ta_200_min&aggregation=month&interpolated=false&quality=physical&width=1692&height=100&by_month=true&col_plot=true"
 path_S_a = "http://137.248.191.219:8080/tsdb/query_csv?plot=SEG01&plot=SEG02&plot=SEG03&plot=SEG04&plot=SEG05&plot=SEG06&plot=SEG07&plot=SEG08&plot=SEG09&plot=SEG10&plot=SEG11&plot=SEG12&plot=SEG13&plot=SEG14&plot=SEG15&plot=SEG16&plot=SEG17&plot=SEG18&plot=SEG19&plot=SEG20&plot=SEG21&plot=SEG22&plot=SEG23&plot=SEG24&plot=SEG25&plot=SEG26&plot=SEG27&plot=SEG28&plot=SEG29&plot=SEG30&plot=SEG31&plot=SEG32&plot=SEG33&plot=SEG34&plot=SEG35&plot=SEG36&plot=SEG37&plot=SEG38&plot=SEG39&plot=SEG40&plot=SEG41&plot=SEG42&plot=SEG43&plot=SEG44&plot=SEG45&plot=SEG46&plot=SEG47&plot=SEG48&plot=SEG49&plot=SEG50&plot=SEW01&plot=SEW02&plot=SEW03&plot=SEW04&plot=SEW05&plot=SEW06&plot=SEW07&plot=SEW08&plot=SEW09&plot=SEW10&plot=SEW11&plot=SEW12&plot=SEW13&plot=SEW14&plot=SEW15&plot=SEW16&plot=SEW17&plot=SEW18&plot=SEW19&plot=SEW20&plot=SEW21&plot=SEW22&plot=SEW23&plot=SEW24&plot=SEW25&plot=SEW26&plot=SEW27&plot=SEW28&plot=SEW29&plot=SEW30&plot=SEW31&plot=SEW32&plot=SEW33&plot=SEW34&plot=SEW35&plot=SEW36&plot=SEW37&plot=SEW38&plot=SEW39&plot=SEW40&plot=SEW41&plot=SEW42&plot=SEW43&plot=SEW44&plot=SEW45&plot=SEW46&plot=SEW47&plot=SEW48&plot=SEW49&plot=SEW50&sensor=P_RT_NRT&sensor=P_RT_NRT_01&sensor=P_RT_NRT_02&sensor=rH_200&sensor=Ta_200&sensor=Ta_200_max&sensor=Ta_200_min&aggregation=month&interpolated=false&quality=physical&width=1692&height=100&by_year=true&col_plot=true"
 
-userpwd <- paste("ag-ui", ":", "UI!db2015", sep = "")
+userpwd <- paste("a###g-ui", ":", "###", sep = "")
 
 
 # HEG and HEW month
@@ -153,20 +153,53 @@ belc_p <- c("AEG", "HEG", "SEG")
 
 # Temperature
 # Mean monthly air temperature over all years per Exploratory (single plots)
-# lapply(belc_ta, function(x){
-#   be_plot_ta_mm_box(data = df_met_m[df_met_m$g_belc == x,], title = x)  
-#   })
+ lapply(belc_ta, function(x){
+   x="HEG"
+   png(paste0(path_output, "be_plot_ta_mm_box_combined", x,".png"),
+           width     = 3880,
+          height    = 4808,
+          units     = "px",
+          res       = 200,
+    pointsize = 1
+     )
+   be_plot_ta_mm_box(data = df_met_m[df_met_m$g_belc == x,], title = x)  
+   dev.off()
+   })
 
 # Mean monthly air temperature over all years per Exploratory (combined plot)
-be_plot_ta_mm_box_combined(data = df_met_m, notch = TRUE, title = "Mean monthly air temperature over all years per Exploratory (combined plot)")  
+#png(paste0(path_output, "be_plot_ta_mm_box_combined.png"),
+ #        width     = 3880,
+  #       height    = 4808,
+  #       units     = "px",
+  #       res       = 200,
+         # pointsize = 1
+  #  )
+#be_plot_ta_mm_box_combined(data = df_met_m, notch = TRUE, title = "Mean monthly air temperature over all years per Exploratory (combined plot)")  
+#dev.off()
 
 # Air temperature deviations from long term mean per month, year and Exploratory
-# lapply(belc_ta, function(x){
-#   be_plot_ta_mm_ds_box(data = df_met_m[df_met_m$g_belc == x,], title = x)  
-# })
+lapply(belc_p, function(x){
+png(paste0(path_output, "be_plot_ta_ds_mm_box_combined", "HEG",".png"),
+    width     = 3880,
+    height    = 4808,
+    units     = "px",
+    res       = 200,
+    pointsize = 1
+)
+  be_plot_ta_mm_ds_box(data = df_met_m[df_met_m$g_belc == x,], title = x) 
+  dev.off()
+ })
 
 # Monthly air temperature deviations from long term mean per year and Exploratory
+png(paste0(path_output, "be_plot_ta_ds_mm_box_combined.png"),
+        width     = 3880,
+       height    = 4808,
+      units     = "px",
+       res       = 200,
+ pointsize = 1
+  )
 be_plot_ta_mm_ds_box_combined(data = df_met_m, notch = TRUE, title = "Monthly air temperature deviations from long term mean per year and Exploratory")  
+dev.off()
 
 head(df_met_a)
 
@@ -193,16 +226,32 @@ for(i in unique(df_met_a$g_belc)){
 #})
 
 # Mean monthly rainfall over all years per Exploratory (combined plot)
-be_plot_pr_mm_box_combined(data = df_met_m, title = NULL) 
+png(paste0(path_output, "be_plot_pr_mm_box_combined.png"),
+    width     = 3880,
+    height    = 4808,
+    units     = "px",
+    res       = 200,
+    pointsize = 1
+)
+be_plot_pr_mm_box_combined(data = df_met_m, title = "Mean monthly rainfall over all years per Exploratory (combined plot)") 
+dev.off()
+
 
 # Rainfall deviations from long term mean per month, year and Exploratory
- lapply(belc_p, function(x){
-   be_plot_pr_mm_ds_box (data = df_met_m[df_met_m$g_belc == x,], title = "Reinfall deviations from long term mean per month, year and Exploratory")  
- })
+ #(belc_p, function(x){
+ #  be_plot_pr_mm_ds_box (data = df_met_m[df_met_m$g_belc == 'x',], title = "Reinfall deviations from long term mean per month, year and Exploratory")  
+ #})
 
 # Monthly rainfall total deviations from long term mean per year and Exploratory
+ png(paste0(path_output, "be_plot_pr_mm_ds_box_combined.png"),
+     width     = 3880,
+     height    = 4808,
+     units     = "px",
+     res       = 200,
+     pointsize = 1
+ )
 be_plot_pr_mm_ds_box_combined(data = df_met_m, title = NULL)  
-
+dev.off()
 
 #Test tnauss
 data <- df_met_m[df_met_m$g_belc == "HEG",]
@@ -220,7 +269,17 @@ data$M_std_cut <- cut(data$M_std, seq(0, 5, 1))
 data$G_std_cut <- cut(data$G_std, seq(0, 10, 1))
 data$F_std_cut <- cut(data$F_std, seq(0, 7, 1))
 
-ggplot(data[!is.na(data$LUI_cut),], aes(x = LUI_cut, y = Ta_200_mm_ds, fill = g_belc)) + geom_boxplot(notch=TRUE)
+png(paste0(path_output, "be_plot_LUI_Ta_200_mm_ds.png"),
+    width     = 3880,
+    height    = 4808,
+    units     = "px",
+    res       = 200,
+    pointsize = 1
+)
+
+ggplot(data[!is.na(data$LUI_cut),], aes(x = LUI_cut, y = Ta_200_mm_ds, fill = g_belc),) + geom_boxplot(notch=TRUE)
+dev.off()
+
 ggplot(data[!is.na(data$LUI_cut),], aes(x = LUI_cut, y = Ta_200_min_mm_ds, fill = g_belc)) + geom_boxplot(notch=TRUE)
 ggplot(data[!is.na(data$LUI_cut),], aes(x = LUI_cut, y = Ta_200_max_mm_ds, fill = g_belc)) + geom_boxplot(notch=TRUE)
 
