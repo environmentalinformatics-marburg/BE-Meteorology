@@ -12,3 +12,17 @@ be_plot_ta_mm_box_combined <- function(data, notch = FALSE, title){
               fill = "Exploratory")) +
     theme(axis.text.x = element_text(angle = 90, hjust = 1), text = element_text(size=20))
 }
+
+be_plot_ta_mm_box_combined_png <- function(path_output, genData, title){
+  png(paste0(path_output, "temperature/be_plot_ta_mm_box_combined.png"),
+      width     = 3880,
+      height    = 4808,
+      units     = "px",
+      res       = 200,
+      pointsize = 1
+  )
+  print({
+    p <- be_plot_ta_mm_box_combined(genData, notch = TRUE, title )  
+  })
+  dev.off()
+}

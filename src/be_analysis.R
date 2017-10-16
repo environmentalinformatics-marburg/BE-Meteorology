@@ -104,21 +104,22 @@ if(length(txt_S_a)>0) {
   }
 }
 
-# Binden die Daten
+# Bind the data
 df_met_m <- rbind(data_H_m, data_A_m, data_S_m)
 df_met_a <- rbind(data_H_a, data_A_a, data_S_a)
 
+# data from file
 #df_met_m <- be_io_met_monthly(df_met_m )
 #df_met_a <- be_io_met_annual(df_met_a)
 
-# Data per url
+# data from url
 df_met_m <- be_io_met_monthly_urlData(df_met_m )
 df_met_a <- be_io_met_annual_urlData(df_met_a)
 
+# LUI, LUT, BIO from data files
 df_lui <- be_io_lui(paste0(path_data, "lui.csv"))
 df_lut <- be_io_lut(paste0(path_data, "lut.csv"))
 df_bio <- read.table(paste0(path_data, "biomasse.csv"), header = TRUE, sep = ";", dec = ",")
-
 
 # Copy the values from column P_RT_NRT_02 into column P_RT_NRT only for HET*
 df_met_m$P_RT_NRT[df_met_m$plotID == "HET38"] <- df_met_m$P_RT_NRT_02[df_met_m$plotID == "HET38"]
@@ -128,81 +129,54 @@ df_met_m$P_RT_NRT[df_met_m$plotID == "HET38"] <- df_met_m$P_RT_NRT_02[df_met_m$p
 df_met_m <- be_deseason_m(df_met_m)
 df_met_a <- be_deseason_a(df_met_a)
 
-
-# COMBINE DATASETS
+# Merge the lui and lut data 
 df_lui_lut <- merge(df_lui, df_lut, by=c("plot","year"), all.x = TRUE)
 df_met_m <- merge(df_met_m, df_lui_lut, 
                   by.x=c("plot","g_a"), by.y=c("plot","year"),
                   all.x = TRUE)
+# Merge the anual data and lui-lut data
 df_met_a <- merge(df_met_a, df_lui_lut, 
                   by.x=c("plot","g_pa"), by.y=c("plot","year"),
                   all.x = TRUE)
+#Merge the anual data for 2009 and bio data
 df_bio <- merge(df_met_a[df_met_a$g_a== "2009",], df_bio,by.x=c("plot"),
                 all.x = TRUE)
 
-head(df_met_m)
-head(df_met_a)
-head(df_bio)
-
-
-# PLOTS
-# Create plots per exploratory and land cover type
+# Extract plots names per exploratory and land cover type in array - "HEG" "HEW" "AEG" "AEW" "SEG" "SEW"
 belc_ta <- unique(df_met_m$g_belc[df_met_m$g_belc != "AET" & 
                                     df_met_m$g_belc != "SET"])
-belc_p <- c("AEG", "HEG", "SEG")
 
-# Temperature
-# Mean monthly air temperature over all years per Exploratory (single plots)
- lapply(belc_ta, function(x){
-   x="HEG"
-   png(paste0(path_output, "be_plot_ta_mm_box_combined", x,".png"),
-           width     = 3880,
-          height    = 4808,
-          units     = "px",
-          res       = 200,
-    pointsize = 1
-     )
-   be_plot_ta_mm_box(data = df_met_m[df_met_m$g_belc == x,], title = x)  
-   dev.off()
-   })
 
-# Mean monthly air temperature over all years per Exploratory (combined plot)
-#png(paste0(path_output, "be_plot_ta_mm_box_combined.png"),
- #        width     = 3880,
-  #       height    = 4808,
-  #       units     = "px",
-  #       res       = 200,
-         # pointsize = 1
-  #  )
-#be_plot_ta_mm_box_combined(data = df_met_m, notch = TRUE, title = "Mean monthly air temperature over all years per Exploratory (combined plot)")  
-#dev.off()
+#--------------  Temperature  ---------------------------------------------------------------------------#
+# (Single plot) Mean monthly air temperature over all years per Exploratory
+lapply(belc_ta, function(x){
+   # be_plot_ta_mm_box(data = df_met_m[df_met_m$g_belc == x,], x )
+   # Save as PNG-File into output (path_output)
+   be_plot_ta_mm_box_png(path_output, genData = df_met_m, x)
+})
+# Mean monthly air temperature over all years for HEG
+# be_plot_ta_mm_box_png(path_output, genData = df_met_m, "HEG")
+# Mean monthly air temperature over all years for AEG
+# be_plot_ta_mm_box_png(path_output, genData = df_met_m, "SEG")
 
-# Air temperature deviations from long term mean per month, year and Exploratory
-lapply(belc_p, function(x){
-png(paste0(path_output, "be_plot_ta_ds_mm_box_combined", "HEG",".png"),
-    width     = 3880,
-    height    = 4808,
-    units     = "px",
-    res       = 200,
-    pointsize = 1
-)
-  be_plot_ta_mm_ds_box(data = df_met_m[df_met_m$g_belc == x,], title = x) 
-  dev.off()
- })
+# (Combined plot) Mean monthly air temperature over all years and Exploratories 
+be_plot_ta_mm_box_combined(data = df_met_m, notch = TRUE, title = "Mean monthly air temperature over all years per Exploratory (combined plot)")  
+# Save as PNG-File 
+be_plot_ta_mm_box_combined_png(path_output, genData = df_met_m, title= "Mean monthly air temperature over all years per Exploratory (combined plot)")
 
-# Monthly air temperature deviations from long term mean per year and Exploratory
-png(paste0(path_output, "be_plot_ta_ds_mm_box_combined.png"),
-        width     = 3880,
-       height    = 4808,
-      units     = "px",
-       res       = 200,
- pointsize = 1
-  )
-be_plot_ta_mm_ds_box_combined(data = df_met_m, notch = TRUE, title = "Monthly air temperature deviations from long term mean per year and Exploratory")  
-dev.off()
+# (Single plot) Air temperature deviations from long term mean per month, year and Exploratory
+lapply(belc_ta, function(x){
+  # be_plot_ta_mm_ds_box(data = df_met_m[df_met_m$g_belc == x,], x )
+  # Save as PNG-File into output (path_output)
+  be_plot_ta_mm_ds_box_png(path_output, genData = df_met_m, x)
+})
 
-head(df_met_a)
+# (Combined plot) Monthly air temperature deviations from long term mean per year and Exploratories
+be_plot_ta_mm_ds_box_combined(data = df_met_m, notch = TRUE, title = "Monthly air temperature deviations from long term mean per year and Exploratories")  
+# Save as PNG-File
+be_plot_ta_mm_ds_box_combined_png(path_output, genData = df_met_m, title= "Mean monthly air temperature over all years per Exploratory (combined plot)")
 
+# HEG42 and HWE12 
 be_plot_ta_mm_ds_box_combined_indv(data = df_met_m, notch = TRUE, title = NULL,
                                    plotIDs = c("HEG42", "HEW12"),
                                    belcs = c("HEG", "HEW"))
@@ -213,13 +187,11 @@ be_plot_ta_mm_box_combined_indv(data = df_met_m, notch = TRUE, title = NULL,
 
 for(i in unique(df_met_a$g_belc)){
   print(i)
-  print(summary(df_met_a[df_met_a$g_belc == i, 
-                         c("g_belc", "Ta_200", "Ta_200_min", 
-                           "Ta_200_max", "P_RT_NRT")]))
-}
+  print(summary(df_met_a[df_met_a$g_belc == i, c("g_belc", "Ta_200", "Ta_200_min", 
+                           "Ta_200_max", "P_RT_NRT")]))}
 
 
-# Rainfall
+#--------------  Rainfall  ---------------------------------------------------------------------------#
 # Mean monthly rainfall over all years per Exploratory (single plots)
 #lapply(belc_p, function(x){
  # be_plot_pr_mm_box(data = df_met_m[df_met_m$g_belc == x,], title = x)  
