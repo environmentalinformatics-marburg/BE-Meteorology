@@ -13,7 +13,7 @@ be_plot_ta_mm_ds_box_combined_indv <- function(data, notch = False, title, plotI
     #geom_vline(xintercept = seq(6.5, 6*12, 6), linetype = "dotted") +
     #stat_summary(fun.y=median, geom="line", aes(group =  year,  colour  = year))  + 
     labs(list(title = title, 
-              x = "Year", y = "Air temperature (C, deseasoned monthly mean)", 
+              x = "Year", y = "Air temperature (°C, deseasoned monthly mean)", 
               fill = "Plots")) +
     theme(axis.text.x = element_text(angle = 90, hjust = 1), text = element_text(size=20))
 }

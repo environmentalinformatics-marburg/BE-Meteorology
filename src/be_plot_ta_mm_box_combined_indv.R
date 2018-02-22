@@ -8,12 +8,12 @@ be_plot_ta_mm_box_combined_indv <- function(data, notch = False, title, plotIDs,
   ggplot(data, aes(x = g_m, y = Ta_200, fill = g_belc)) + 
     geom_boxplot(position = "dodge", notch = notch) +
     geom_vline(xintercept = seq(1.5, 7, 1), linetype = "dotted") +
-    scale_fill_manual(values = c("#a6cee3", "#1f78b4", "#b2df8a", "#33a02c",
-                                 "#fb9a99", "#e31a1c","#DBD413", "#49E9FF", "#BA49FF", "#d1b5b5")) + 
+    scale_fill_manual(values = c("#cccccc", "#b2df8a", 
+                                 "#969696", "#33a02c")) + 
     #geom_vline(xintercept = seq(6.5, 6*12, 6), linetype = "dotted") +
     #stat_summary(fun.y=median, geom="line", aes(group =  year,  colour  = year))  + 
     labs(list(title = title, 
-              x = "Month", y = "Air temperature (C, monthly means)", 
+              x = "Month", y = "Air temperature (°C, monthly means)", 
               fill = "Plots")) +
     theme(axis.text.x = element_text(angle = 90, hjust = 1), 
           text = element_text(size=20))
