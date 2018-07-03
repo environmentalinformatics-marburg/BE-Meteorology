@@ -217,13 +217,11 @@ df_met_m
 
 
 
-
-
 # Hainich
 nph = c("HEW10", "HEW11", "HEW12", "HEW34", "HEW35", "HEW36", "HEW37", "HEW38", "HEW39", "HEW40",
         "HEW41", "HEW42", "HEW50", "HEG17", "HEG19", "HEG41")
 
-s = df_met_d[grepl("HEW", df_met_d$plotID), ]
+s = df_met_m[grepl("HEG", df_met_m$plotID), ]
 s$nph = "outside NP"
 s$nph[s$plotID %in% nph] = "inside NP"
 
