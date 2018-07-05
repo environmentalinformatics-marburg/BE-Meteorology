@@ -46,3 +46,6 @@ ggplot(tmp, aes(x = grp_months, y = value, fill = grp)) +
   theme_bw()
 
 
+summary(df_met_m_from_d$Ta_200[substr(df_met_m_from_d$EPID, 1, 1) == "A"])
+summary(df_met_m_from_d$Ta_200[substr(df_met_m_from_d$EPID, 1, 1) == "H"])
+summary(df_met_m_from_d$Ta_200[substr(df_met_m_from_d$EPID, 1, 1) == "S"])

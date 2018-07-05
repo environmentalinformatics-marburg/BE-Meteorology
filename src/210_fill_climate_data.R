@@ -59,6 +59,7 @@ v_na = lapply(colnames(df_met_d)[3:51], function(v){
 
 
 # Write dataset
-df_met_d_filled = readRDS(paste0(path_rdata, "/df_met_d_filled.rds"))
+v_na = saveRDS(v_na, paste0(path_rdata, "/v_na.rds"))
+# df_met_d_filled = readRDS(paste0(path_rdata, "/df_met_d_filled.rds"))
 
 

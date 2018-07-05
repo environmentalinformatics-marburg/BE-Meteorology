@@ -38,6 +38,7 @@ vars_agg <- dcast(vars_agg, EPID + datetime ~ var, value.var="value")
 vars_agg$grp_months = substr(vars_agg$datetime, 6, 7)
 vars_agg$grp_years = substr(vars_agg$datetime, 1, 4)
 vars_agg$grp_belc = substr(vars_agg$EPID, 1, 3)
+vars_agg$grp_lc = substr(vars_agg$EPID, 3, 3)
 
 # Write dataset
 saveRDS(vars_agg, paste0(path_rdata, "/df_met_m_from_d.rds"))
