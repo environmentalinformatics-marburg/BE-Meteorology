@@ -1,4 +1,4 @@
-source("C:/Users/tnauss/permanent/plygrnd/exploratorien/paper_be_meteorology/src/00_set_environment.R")
+source("C:/Users/tnauss/permanent/plygrnd/exploratorien/BE-Meteorology/src/000_set_environment.R")
 
 #### Compile data
 # Read datasets
@@ -22,29 +22,39 @@ df_sst = readBExpStandStruc(paste0(path_smi, "/20106_Forest_EP_Stand_structural_
 
 # df_vegrel = readBExpVegReleves(paste0(path_releves, "/19686_Vegetation Records for Grassland EPs, 2008 - 2016_1.7.13/19686.txt"))
 # df_vegrel = compSpecRichBExpVegReleves(df_vegrel)
-
 df_veghead = readBExpVegHeaderData(paste0(path_releves, "Vegetation_Header_Data_2008-2016.csv"))
+df_vegforest = readRDS(paste0(path_rdata, "/forest_diversity.rds"))
+
 
 # Compile grassland data
+df_met_d_g = merge(df_met_d, df_lui, by.x = c("EPID", "g_a"), by.y = c("EPID", "Year"))
+df_met_d_g = merge(df_met_d_g, df_veghead, by.x = c("EPID", "g_a"), by.y = c("EPID", "Year"))
+df_met_d_g = merge(df_met_d_g, df_lut, by.x = c("EPID", "g_a"), by.y = c("EPID", "year"), all.x = TRUE)
+df_met_d_g$EPID = droplevels(df_met_d_g$EPID)
+length(unique(df_met_d_g$EPID)) == 150
+
 df_met_m_g = merge(df_met_m, df_lui, by.x = c("EPID", "g_a"), by.y = c("EPID", "Year"))
 df_met_m_g = merge(df_met_m_g, df_veghead, by.x = c("EPID", "g_a"), by.y = c("EPID", "Year"))
 df_met_m_g = merge(df_met_m_g, df_lut, by.x = c("EPID", "g_a"), by.y = c("EPID", "year"), all.x = TRUE)
 df_met_m_g$EPID = droplevels(df_met_m_g$EPID)
 length(unique(df_met_m_g$EPID)) == 150
 
+
 # Compile forest data
+df_met_d_w = merge(df_met_d, df_smi, by.x = c("EPID"), by.y = c("EPID"))
+df_met_d_w = merge(df_met_d_w, df_sst, by.x = c("EPID"), by.y = c("EPID"))
+df_met_d_w = merge(df_met_d_w, df_vegforest, by.x = c("EPID"), by.y = c("EPID"))
+df_met_d_w$EPID = droplevels(df_met_d_w$EPID)
+length(unique(df_met_d_w$EPID)) == 150
+
 df_met_m_w = merge(df_met_m, df_smi, by.x = c("EPID"), by.y = c("EPID"))
 df_met_m_w = merge(df_met_m_w, df_sst, by.x = c("EPID"), by.y = c("EPID"))
+df_met_m_w = merge(df_met_m_w, df_vegforest, by.x = c("EPID"), by.y = c("EPID"))
 df_met_m_w$EPID = droplevels(df_met_m_w$EPID)
 length(unique(df_met_m_w$EPID)) == 150
 
-df_met_d = merge(df_met_d, df_lui, by.x = c("EPID", "g_a"), by.y = c("EPID", "Year"), all.x = TRUE)
-df_met_d = merge(df_met_d, df_smi, by.x = c("EPID"), by.y = c("EPID"), all.x = TRUE)
-df_met_d = merge(df_met_d, df_sst, by.x = c("EPID"), by.y = c("EPID"), all.x = TRUE)
-df_met_d = merge(df_met_d, df_lut, by.x = c("EPID", "g_a"), by.y = c("EPID", "year"), all.x = TRUE)
-df_met_d = merge(df_met_d, df_veghead, by.x = c("EPID", "g_a"), by.y = c("EPID", "Year"), all.x = TRUE)
 
-
+# Save data
 saveRDS(df_met_d_g, paste0(path_rdata, "/df_met_d_g.rds"))
 saveRDS(df_met_d_w, paste0(path_rdata, "/df_met_d_w.rds"))
 saveRDS(df_met_m_g, paste0(path_rdata, "/df_met_m_g.rds"))
