@@ -64,23 +64,31 @@ v_na = lapply(prm, function(v){
                              repeats = 1, verbose = FALSE)
       
       # Compute model and predict values
-      
-      model = train(training_set_wide[, !colnames(training_set_wide) %in% c("datetime", response_id)], 
-                    training_set_wide[, colnames(training_set_wide) %in% c(response_id)], 
-                    method = "lm",
-                    trControl = trCntr)  
+      if(ncol(training_set_wide[, !colnames(training_set_wide) %in% c("datetime", response_id)]) > 2){
+        model = ffs(training_set_wide[, !colnames(training_set_wide) %in% c("datetime", response_id)], 
+                      training_set_wide[, colnames(training_set_wide) %in% c(response_id)], 
+                      method = "lm",
+                      trControl = trCntr)  
+      } else {
+        model = train(training_set_wide[, !colnames(training_set_wide) %in% c("datetime", response_id)], 
+                      training_set_wide[, colnames(training_set_wide) %in% c(response_id)], 
+                      method = "lm",
+                      trControl = trCntr)  
+      }
       
       fillvalues = data.frame(act_na = act_na,
-                              predicting_set_wide$datetime, 
-                              predict(model, predicting_set_wide[, -1]))
-      colnames(fillvalues) = c("datetime", v)
+                              predictor_set_wide$datetime, 
+                              predict(model, predictor_set_wide))
+      colnames(fillvalues) = c("act_na", "datetime", v)
       g_fill = list(fillvalues = fillvalues, model = model)
       
-      saveRDS(g_fill, file = paste0(path_temp, "g_fill_", v, "_", as.character(p), ".rds"))
+      saveRDS(g_fill, file = paste0(path_temp, "df_met_dwd_h_g_fill_", v, "_", as.character(p), ".rds"))
       
       return(g_fill)
     }
   })
   
 })
+
+saveRDS(v_na, file = paste0(path_temp, "df_met_dwd_h_g_fill_v_na.rds"))
 
