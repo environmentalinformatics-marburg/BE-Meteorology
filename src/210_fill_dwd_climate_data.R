@@ -8,10 +8,6 @@ if(length(showConnections()) == 0){
 # Read datasets
 df_met_h_AE = readRDS(paste0(path_rdata, "/df_met_h_AE.rds"))
 df_met_h_dwd = readRDS(paste0(path_rdata, "/df_met_dwd_h.rds"))
-# df_met_m= readRDS(paste0(path_rdata, "/df_met_h.rds"))
-# df_met_m_meta = readRDS(paste0(path_rdata, "/df_met_h_meta.rds"))
-# df_met_m = readRDS(paste0(path_rdata, "/df_met_m.rds"))
-# df_met_m_meta = readRDS(paste0(path_rdata, "/df_met_m_meta.rds"))
 
 dt_range = data.frame(datetime = as.POSIXct(df_met_h_AE$datetime[df_met_h_AE$EPID == "AEG01"]))
 # dt_range = data.frame(datetime = as.character(dt_range))
@@ -22,7 +18,8 @@ df_met_h_dwd$rH_200[df_met_h_dwd$rH_200 == -999] = NA
 df_met_h_dwd$datetime = as.POSIXct(df_met_h_dwd$datetime)
 # df_met_h_dwd$datetime = as.character(df_met_h_dwd$datetime)
 
-prm = c("Ta_200")
+prm = c("Ta_200", "rH_200")
+prm = c("rH_200")
 
 v_na = lapply(prm, function(v){
   df_met_h_dwd_wide = dcast(melt(df_met_h_dwd[, colnames(df_met_h_dwd) %in% c("STATIONS_ID", "datetime", v)], 
@@ -80,15 +77,18 @@ v_na = lapply(prm, function(v){
                               predictor_set_wide$datetime, 
                               predict(model, predictor_set_wide))
       colnames(fillvalues) = c("act_na", "datetime", v)
-      g_fill = list(fillvalues = fillvalues, model = model)
       
-      saveRDS(g_fill, file = paste0(path_temp, "df_met_dwd_h_g_fill_", v, "_", as.character(p), ".rds"))
+      act_station = data.frame(act_station, model$results[,-1])
+      act_station[fillvalues$act_na, p] = fillvalues[, v]
+      act_station[-fillvalues$act_na, colnames(act_station) %in% c("RMSE", "Rsquared", "RMSESD", "RsquaredSD")] = NA
+      # act_station[fillvalues$act_na, ]
       
-      return(g_fill)
+      saveRDS(model, file = paste0(path_rdata, "df_met_dwd_h_model_", as.character(p), ".rds"))
+      saveRDS(act_station, file = paste0(path_rdata, "df_met_dwd_h_", v, "_", substr(as.character(p), nchar(v)+2, nchar(as.character(p))), ".rds"))
+      return(NULL)
     }
   })
-  
 })
 
-saveRDS(v_na, file = paste0(path_temp, "df_met_dwd_h_g_fill_v_na.rds"))
+
 

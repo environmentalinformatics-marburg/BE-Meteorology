@@ -56,10 +56,11 @@ df_met_h$g_belc = factor(df_met_h$g_belc, levels = c("AEG", "HEG", "SEG",
 dwd_station_list = list.files(path_dwd, recursive = TRUE, 
                               pattern = glob2rx("*produkt_tu*.txt"), 
                               full.names = TRUE)
-dwd_station_groups = data.frame(EP=c("AE", "HE", "SE"),
+dwd_station_groups = data.frame(EP=rep(c("AE", "HE", "SE"),each=5),
                                 stid = c("3278", "3402", "2814", "2074", "4887",
                                          "6305", "7368", "1297", "0896", "1270", 
                                          "0164", "1869", "7351", "5745", "7389"))
+
 df_met_h_dwd = lapply(dwd_station_list, function(s){
   act_dat = dwd_io_stations_hourly(s)
   act_dat$EP = dwd_station_groups$EP[grepl(substr(basename(s),38,41), dwd_station_groups$stid)]
@@ -76,11 +77,6 @@ saveRDS(df_met_h[substr(df_met_h$EPID, 1, 2) == "HE",], paste0(path_rdata, "/df_
 saveRDS(df_met_h[substr(df_met_h$EPID, 1, 2) == "SE",], paste0(path_rdata, "/df_met_h_SE.rds"))
 
 saveRDS(df_met_h_dwd, paste0(path_rdata, "/df_met_dwd_h.rds"))
-saveRDS(df_met_h_dwd[df_met_h_dwd$EP == "AE",], paste0(path_rdata, "/df_met_dwd_h_AE.rds"))
-saveRDS(df_met_h_dwd[df_met_h_dwd$EP == "HE",], paste0(path_rdata, "/df_met_dwd_h_HE_.rds"))
-saveRDS(df_met_h_dwd[df_met_h_dwd$EP == "SE",], paste0(path_rdata, "/df_met_dwd_h_SE.rds"))
-
-
 
 # saveRDS(df_met_h_uf, paste0(path_rdata, "/df_met_h_uf.rds"))
 # saveRDS(df_met_h_uf[substr(df_met_h_uf$EPID, 1, 2) == "AE",], paste0(path_rdata, "/df_met_h_uf_AE.rds"))
