@@ -6,6 +6,14 @@ df_met_h$g_belc = factor(df_met_h$g_belc, levels = c("AEG", "HEG", "SEG",
                                                      "AEW", "HEW", "SEW", 
                                                      "AET", "HET", "SET"))
 
+# obs$agg = substr(obs$datetime, 6, 13)
+# obs_mean = aggregate(obs[, 2], by = list(obs$agg), FUN=mean) 
+# head(obs_mean)
+# colnames(obs_mean) = c("agg", "mean")
+# obs = merge(obs, obs_mean)
+# obs$ds = obs[, 3] - obs$mean
+
+
 # df_met_h_uf = be_io_met_hourly(paste0(path_met_h_uf, "/plots.csv"))
 # df_met_h_uf$g_belc = factor(df_met_h_uf$g_belc, levels = c("AEG", "HEG", "SEG",
 #                                                      "AEW", "HEW", "SEW", 

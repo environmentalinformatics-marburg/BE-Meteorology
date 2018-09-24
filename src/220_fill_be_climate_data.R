@@ -66,7 +66,7 @@ lapply(be_files, function(e){
         # Compute model and predict values
         model = ffs(training_set_wide[, !colnames(training_set_wide) %in% c("datetime", as.character(p))], 
                     training_set_wide[, colnames(training_set_wide) %in% as.character(p)], 
-                    method = "lm",
+                    method = "pls",
                     trControl = trCntr)  
         
         fillvalues = data.frame(act_na = act_na,
@@ -82,14 +82,13 @@ lapply(be_files, function(e){
         act_station$RMSE[fillvalues$act_na] = model$results$RMSE
         act_station$Rsquared[fillvalues$act_na] = model$results$Rsquared
         
-        saveRDS(model, file = paste0(path_rdata, "df_met_", as.character(p), "_h_model_", as.character(v), ".rds"))
-        saveRDS(act_station, file = paste0(path_rdata, "df_met_", as.character(p), "_h_", v, ".rds"))
+        saveRDS(model, file = paste0(path_rdata, "df_met_", as.character(p), "_h_model_pls_", as.character(v), ".rds"))
+        saveRDS(act_station, file = paste0(path_rdata, "df_met_", as.character(p), "_h_pls_", v, ".rds"))
       } else {
         act_station = act_station[, colnames(act_station) %in% c("datetime", v)]
         act_station$RMSE = NA
         act_station$Rsquared = NA
-        saveRDS(model, file = paste0(path_rdata, "df_met_", as.character(p), "_h_model_", as.character(v), ".rds"))
-        saveRDS(act_station, file = paste0(path_rdata, "df_met_", as.character(p), "_h_", v, ".rds"))
+        saveRDS(act_station, file = paste0(path_rdata, "df_met_", as.character(p), "_h_pls_", v, ".rds"))
       }
       return(NULL)
     })
