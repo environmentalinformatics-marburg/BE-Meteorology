@@ -7,14 +7,13 @@ if(length(showConnections()) == 0){
 
 # Model data
 be_model_files = list.files(path_rdata, 
-                            pattern = glob2rx("df_met_*_h_model_pls_*.rds"), 
+                            pattern = glob2rx("df_met_be_*_h_model_pls_*.rds"), 
                             full.names = TRUE)
-be_model_files = be_model_files[-grep("dwd", be_model_files)]
 length(be_model_files)
 
 be_fill_results = lapply(be_model_files, function(e){
   model = readRDS(e)
-  df = data.frame(EPID = substr(basename(e), 8, 12),
+  df = data.frame(EPID = substr(basename(e), 11, 15),
                   var = substr(basename(e), nchar(basename(e))-9, nchar(basename(e))-4),
                   # model$results,
                   model$results[model$finalModel$ncomp,],
@@ -118,3 +117,6 @@ radolan[2139,]
 
 summary(df_met$precipitation_radolan)
 summary(radolan$precipitation_radolan)
+
+
+

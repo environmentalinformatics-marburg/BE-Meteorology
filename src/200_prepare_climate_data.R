@@ -5,14 +5,9 @@ df_met_h = be_io_met_hourly(paste0(path_met_h, "/plots.csv"))
 df_met_h$g_belc = factor(df_met_h$g_belc, levels = c("AEG", "HEG", "SEG",
                                                      "AEW", "HEW", "SEW", 
                                                      "AET", "HET", "SET"))
-
-# obs$agg = substr(obs$datetime, 6, 13)
-# obs_mean = aggregate(obs[, 2], by = list(obs$agg), FUN=mean) 
-# head(obs_mean)
-# colnames(obs_mean) = c("agg", "mean")
-# obs = merge(obs, obs_mean)
-# obs$ds = obs[, 3] - obs$mean
-
+df_met_h$datetime = as.POSIXct(df_met_h$datetime)
+df_met_h = df_met_h[df_met_h$datetime >= as.POSIXct("2008-01-01 00:00:00", "UTC") &
+                      df_met_h$datetime <= as.POSIXct("2017-12-31 23:15:00", "UTC"), ]
 
 # df_met_h_uf = be_io_met_hourly(paste0(path_met_h_uf, "/plots.csv"))
 # df_met_h_uf$g_belc = factor(df_met_h_uf$g_belc, levels = c("AEG", "HEG", "SEG",
@@ -61,30 +56,67 @@ df_met_h$g_belc = factor(df_met_h$g_belc, levels = c("AEG", "HEG", "SEG",
 # 7351 Feldberg
 # 5745 Zehdenick
 # 7389 Heckelberg
-# dwd_station_list = list.files(path_dwd, recursive = TRUE, 
-#                               pattern = glob2rx("*produkt_tu*.txt"), 
-#                               full.names = TRUE)
-# dwd_station_groups = data.frame(EP=rep(c("AE", "HE", "SE"),each=5),
-#                                 stid = c("3278", "3402", "2814", "2074", "4887",
-#                                          "6305", "7368", "1297", "0896", "1270", 
-#                                          "0164", "1869", "7351", "5745", "7389"))
-# 
-# df_met_h_dwd = lapply(dwd_station_list, function(s){
-#   act_dat = dwd_io_stations_hourly(s)
-#   act_dat$EP = dwd_station_groups$EP[grepl(substr(basename(s),38,41), dwd_station_groups$stid)]
-#   return(act_dat)
-# })
-# df_met_h_dwd = do.call("rbind", df_met_h_dwd)
-# df_met_h_dwd = df_met_h_dwd[df_met_h_dwd$datetime >= as.POSIXlt("2008-01-01 00:00:00", "UTC") &
-#                               df_met_h_dwd$datetime <= as.POSIXlt("2017-12-31 23:00:00", "UTC"),]
+dwd_station_list = list.files(path_dwd, recursive = TRUE, 
+                             pattern = glob2rx("*produkt_tu*.txt"), 
+                             full.names = TRUE)
+dwd_station_groups = data.frame(EP=rep(c("AE", "HE", "SE"),each=5),
+                                stid = c("3278", "3402", "2814", "2074", "4887",
+                                         "6305", "7368", "1297", "0896", "1270", 
+                                         "0164", "1869", "7351", "5745", "7389"))
+
+df_met_h_AE = readRDS(paste0(path_rdata, "/df_met_be_h_AE.rds"))
+dt_range = data.frame(datetime = as.POSIXct(df_met_h_AE$datetime[df_met_h_AE$EPID == "AEG01"]))
+
+df_met_h_dwd = lapply(dwd_station_list, function(s){
+  act_dat = dwd_io_stations_hourly(s)
+  act_dat = merge(dt_range, act_dat, by = "datetime", all.x = TRUE)
+  
+  act_dat$STATIONS_ID = sprintf("%04d", unique(act_dat$STATIONS_ID)[!is.na(unique(act_dat$STATIONS_ID))])
+  act_dat$EP = dwd_station_groups$EP[grepl(substr(basename(s),38,41), dwd_station_groups$stid)]
+  act_dat$Ta_200[act_dat$Ta_200 == -999] = NA
+  act_dat$rH_200[act_dat$rH_200 == -999] = NA
+  
+  # act_dat$agg = substr(act_dat$datetime, 6, 13)
+  # 
+  # ta_mean = aggregate(Ta_200 ~ agg, data = act_dat, FUN=mean, na.rm=TRUE)
+  # rh_mean = aggregate(rH_200 ~ agg, data = act_dat, FUN=mean, na.rm = TRUE) 
+  # ds_mean = merge(ta_mean, rh_mean)
+  # head(ds_mean)
+  # colnames(ds_mean) = c("agg2", "Ta_200_hmean", "rH_200_hmean")
+  # 
+  # act_dat$agg2 = NA
+  # act_dat$Ta_200_hmean = NA
+  # act_dat$rH_200_hmean = NA
+  # 
+  # for(v in colnames(ds_mean)){
+  #   for(a in ds_mean$agg2){
+  #     act_dat[act_dat$agg == a, v] = ds_mean[ds_mean$agg2 == a, v]
+  #   }
+  # }
+  # 
+  # if(all(act_dat$agg == act_dat$agg2)){
+  #   act_dat$agg2 = NULL
+  # }
+  # 
+  # act_dat$dsTa_200 = act_dat$Ta_200 - act_dat$Ta_200_hmean
+  # act_dat$dsrH_200 = act_dat$rH_200 - act_dat$rH_200_hmean
+  return(act_dat)
+})
+
+df_met_h_dwd = do.call("rbind", df_met_h_dwd)
+
+# head(act_dat)
+# plot(act_dat$Ta_200[0:100], type = "l")
+# lines(act_dat$dsTa_200[0:100], col = "red")
+# lines(act_dat$Ta_200_hmean[0:100], col = "blue")
 
 # Write datasets
-saveRDS(df_met_h, paste0(path_rdata, "/df_met_h.rds"))
-saveRDS(df_met_h[substr(df_met_h$EPID, 1, 2) == "AE",], paste0(path_rdata, "/df_met_h_AE.rds"))
-saveRDS(df_met_h[substr(df_met_h$EPID, 1, 2) == "HE",], paste0(path_rdata, "/df_met_h_HE.rds"))
-saveRDS(df_met_h[substr(df_met_h$EPID, 1, 2) == "SE",], paste0(path_rdata, "/df_met_h_SE.rds"))
+saveRDS(df_met_h, paste0(path_rdata, "/df_met_be_h.rds"))
+saveRDS(df_met_h[substr(df_met_h$EPID, 1, 2) == "AE",], paste0(path_rdata, "/df_met_be_h_AE.rds"))
+saveRDS(df_met_h[substr(df_met_h$EPID, 1, 2) == "HE",], paste0(path_rdata, "/df_met_be_h_HE.rds"))
+saveRDS(df_met_h[substr(df_met_h$EPID, 1, 2) == "SE",], paste0(path_rdata, "/df_met_be_h_SE.rds"))
 
-# saveRDS(df_met_h_dwd, paste0(path_rdata, "/df_met_dwd_h.rds"))
+saveRDS(df_met_h_dwd, paste0(path_rdata, "/df_met_dwd_h.rds"))
 
 # saveRDS(df_met_h_uf, paste0(path_rdata, "/df_met_h_uf.rds"))
 # saveRDS(df_met_h_uf[substr(df_met_h_uf$EPID, 1, 2) == "AE",], paste0(path_rdata, "/df_met_h_uf_AE.rds"))
