@@ -6,8 +6,8 @@ df_met_h$g_belc = factor(df_met_h$g_belc, levels = c("AEG", "HEG", "SEG",
                                                      "AEW", "HEW", "SEW", 
                                                      "AET", "HET", "SET"))
 df_met_h$datetime = as.POSIXct(df_met_h$datetime)
-df_met_h = df_met_h[df_met_h$datetime >= as.POSIXct("2008-01-01 00:00:00", "UTC") &
-                      df_met_h$datetime <= as.POSIXct("2017-12-31 23:15:00", "UTC"), ]
+# df_met_h = df_met_h[df_met_h$datetime >= as.POSIXct("2008-01-01 00:00:00", "UTC") &
+#                       df_met_h$datetime <= as.POSIXct("2017-12-31 23:15:00", "UTC"), ]
 
 # df_met_h_uf = be_io_met_hourly(paste0(path_met_h_uf, "/plots.csv"))
 # df_met_h_uf$g_belc = factor(df_met_h_uf$g_belc, levels = c("AEG", "HEG", "SEG",
