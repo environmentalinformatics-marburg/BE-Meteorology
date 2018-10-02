@@ -91,7 +91,7 @@ v_na = lapply(prm, function(v){
           act_station[!is.na(act_station$RMSE) & act_station[, v] < 0, v] = 0
         }
       }
-      saveRDS(model, file = paste0(path_rdata, "df_met_dwd_h_model_", as.character(p), ".rds"))
+      saveRDS(model, file = paste0(path_rdata, "df_met_dwd_h_model_", v, "_", as.character(p), ".rds"))
       saveRDS(act_station, file = paste0(path_rdata, "df_met_dwd_h_", v, "_", as.character(p), ".rds"))
     } else {
       act_station$RMSE = NA
@@ -107,10 +107,7 @@ v_na = lapply(prm, function(v){
   })
 
 
-dwd_station_groups = data.frame(EP=rep(c("AE", "HE", "SE"),each=5),
-                                stid = c("3278", "3402", "2814", "2074", "4887",
-                                         "6305", "7368", "1297", "0896", "1270", 
-                                         "0164", "1869", "7351", "5745", "7389"))
+# Cross check
 dwd_files = list.files(path_rdata, pattern = glob2rx("*dwd_h_*.rds"), full.names = TRUE)
 dwd_files = dwd_files[!grepl("model", dwd_files)]
 
@@ -136,7 +133,6 @@ round(quantile(df_met_h_dwd_filled_Ta$Ta_200[!is.na(df_met_h_dwd_filled_Ta$RMSE)
 round(quantile(df_met_h_dwd_filled_rH$rH_200, probs = seq(0,1,0.1)), 2)
 round(quantile(df_met_h_dwd_filled_rH$rH_200[is.na(df_met_h_dwd_filled_Ta$RMSE)], probs = seq(0,1,0.1)), 2)
 round(quantile(df_met_h_dwd_filled_rH$rH_200[!is.na(df_met_h_dwd_filled_Ta$RMSE)], probs = seq(0,1,0.1)), 2)
-
 
 boxplot(unique(df_met_h_dwd_filled_rH$RMSE[!is.na(df_met_h_dwd_filled_rH$RMSE)]))
 boxplot(unique(df_met_h_dwd_filled_Ta$RMSE[!is.na(df_met_h_dwd_filled_Ta$RMSE)]))
