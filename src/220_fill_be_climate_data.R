@@ -18,7 +18,7 @@ dwd_station_groups = data.frame(EP=rep(c("AE", "HE", "SE"),each=5),
                                          "6305", "7368", "1297", "0896", "1270", 
                                          "0164", "1869", "7351", "5745", "7389"))
 
-be_files = list.files(path_rdata, pattern = glob2rx("df_met_be_h_*.rds"), full.names = TRUE)
+be_files = list.files(path_rdata, pattern = glob2rx("df_met_be_h_*E.rds"), full.names = TRUE)
 
 lapply(be_files, function(e){
   df_met_h = readRDS(e)
@@ -101,7 +101,6 @@ lapply(be_files, function(e){
         act_station$RsquaredSD[fillvalues$act_na] = model$results$RsquaredSD
         act_station$MAESD[fillvalues$act_na] = model$results$MAESD
         
-        saveRDS(model, file = paste0(path_rdata, "df_met_be_h_model_", v, "_", as.character(p), ".rds"))
         saveRDS(act_station, file = paste0(path_rdata, "df_met_be_h_", v, "_", as.character(p), ".rds"))
       } else {
         saveRDS(act_station, file = paste0(path_rdata, "df_met_be_h_", v, "_", as.character(p), ".rds"))
