@@ -112,3 +112,28 @@ lapply(be_files, function(e){
 
 
 
+# Cross check
+be_files = list.files(path_rdata, pattern = glob2rx("df_met_be_h_*.rds"), full.names = TRUE)
+prm = c("Ta_200", "rH_200")
+df_met_be_h_filled = lapply(prm, function(v){
+  lapply(be_files[grep(v, be_files)], function(f){
+    dat = readRDS(f)
+    data.frame(dat[!is.na(dat$RMSE),][1,], 
+               as.data.frame(t(quantile(dat[, v], probs = seq(0, 1, 0.1)))),
+               nas = sum(!is.na(dat$RMSE)))
+  
+  })
+})
+df_met_be_h_filled[[1]] = do.call("rbind", df_met_be_h_filled[[1]])
+df_met_be_h_filled[[2]] = do.call("rbind", df_met_be_h_filled[[2]])
+
+df_met_be_h_filled[[1]]$EP = substr(df_met_be_h_filled[[1]]$EPID, 1, 3)
+df_met_be_h_filled[[2]]$EP = substr(df_met_be_h_filled[[2]]$EPID, 1, 3)
+
+summary(df_met_be_h_filled[[1]])
+summary(df_met_be_h_filled[[2]])
+
+ggplot(data=df_met_be_h_filled[[1]], aes(x=EP, y=Rsquared)) + geom_boxplot()
+ggplot(data=df_met_be_h_filled[[2]], aes(x=EP, y=MAE)) + geom_boxplot()
+
+
