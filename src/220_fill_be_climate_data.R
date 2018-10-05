@@ -137,3 +137,6 @@ ggplot(data=df_met_be_h_filled[[1]], aes(x=EP, y=Rsquared)) + geom_boxplot()
 ggplot(data=df_met_be_h_filled[[2]], aes(x=EP, y=MAE)) + geom_boxplot()
 
 
+# df_met_h[df_met_h$datetime > as.POSIXct("2008-08-18 23:00:00", "UTC") & df_met_h$datetime < as.POSIXct("2018-08-20 23:00:00", "UTC"), ]
+# dwd_wide[dwd_wide$datetime > as.POSIXct("2008-08-18 23:00:00", "UTC") & dwd_wide$datetime < as.POSIXct("2018-08-20 23:00:00", "UTC"), ]
+# df_met_h[df_met_h$datetime > as.POSIXct("2008-08-18 23:00:00", "UTC") & df_met_h$datetime < as.POSIXct("2018-08-20 23:00:00", "UTC") & df_met_h$EPID == "AEG04", ]
