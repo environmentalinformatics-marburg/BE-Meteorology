@@ -7,7 +7,7 @@ if(length(showConnections()) == 0){
 
 # Model data
 be_model_files = list.files(path_rdata, 
-                            pattern = glob2rx("df_met_be_*_h_model_pls_*.rds"), 
+                            pattern = glob2rx("df_met_be_h_model_Ta_*.rds"), 
                             full.names = TRUE)
 length(be_model_files)
 
@@ -16,7 +16,7 @@ be_fill_results = lapply(be_model_files, function(e){
   df = data.frame(EPID = substr(basename(e), 11, 15),
                   var = substr(basename(e), nchar(basename(e))-9, nchar(basename(e))-4),
                   # model$results,
-                  model$results[model$finalModel$ncomp,],
+                  model$results, # [model$finalModel$ncomp,],
                   # dwdvars = length(model$finalModel$coefficients)-1,
                   dwdvars = length(model$selectedvars),
                   dwd01 = NA,
@@ -24,7 +24,7 @@ be_fill_results = lapply(be_model_files, function(e){
                   dwd03 = NA,
                   dwd04 = NA,
                   dwd05 = NA)
-  df[, seq(9, 8+df$dwdvars)] = model$selectedvars
+  df[, seq(11, 10+df$dwdvars)] = model$selectedvars
   return(df)
 })
 
@@ -34,6 +34,28 @@ be_fill_results$EP = substr(be_fill_results$EPID, 1, 3)
 # saveRDS(be_fill_results, file=paste0(path_rdata, "be_model_pls_results.rds"))
 # be_fill_results = readRDS(file=paste0(path_rdata, "be_model_pls_results.rds"))
 
+
+r = be_fill_results
+
+sum(grepl("Ta_200_4887", r$dwd01)) + sum(grepl("Ta_200_4887", r$dwd02)) +
+  sum(grepl("Ta_200_4887", r$dwd03)) + sum(grepl("Ta_200_4887", r$dwd04)) + 
+  sum(grepl("Ta_200_4887", r$dwd05))
+
+sum(grepl("Ta_200_1270", r$dwd01)) + sum(grepl("Ta_200_1270", r$dwd02)) +
+  sum(grepl("Ta_200_1270", r$dwd03)) + sum(grepl("Ta_200_1270", r$dwd04)) + 
+  sum(grepl("Ta_200_1270", r$dwd05))
+
+sum(grepl("Ta_200_0164", r$dwd01)) + sum(grepl("Ta_200_0164", r$dwd02)) +
+  sum(grepl("Ta_200_0164", r$dwd03)) + sum(grepl("Ta_200_0164", r$dwd04)) + 
+  sum(grepl("Ta_200_0164", r$dwd05))
+
+summary(r$dwdvars[grep("AE", r$var)])
+summary(r$dwdvars[grep("HE", r$var)])
+summary(r$dwdvars[grep("SE", r$var)])
+
+
+be_fill_results$dwdvars
+head(be_fill_results)
 
 # Observation data
 be_obs_files = list.files(path_rdata, 

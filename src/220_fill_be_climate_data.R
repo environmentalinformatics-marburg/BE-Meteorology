@@ -25,6 +25,7 @@ lapply(be_files, function(e){
   df_met_h$datetime = as.POSIXct(df_met_h$datetime)
   
   prm = c("Ta_200", "rH_200")
+  prm = c("Ta_200")
   
   v_na = lapply(prm, function(v){
     
@@ -60,8 +61,8 @@ lapply(be_files, function(e){
         
         
         trCntr <- trainControl(method="cv",
-                               index = stf$training_index,
-                               indexOut = stf$training_indexOut,
+                               index = stf$index,
+                               indexOut = stf$indexOut,
                                returnResamp = "all",
                                repeats = 1, verbose = FALSE)
         
@@ -101,7 +102,8 @@ lapply(be_files, function(e){
         act_station$RsquaredSD[fillvalues$act_na] = model$results$RsquaredSD
         act_station$MAESD[fillvalues$act_na] = model$results$MAESD
         
-        saveRDS(act_station, file = paste0(path_rdata, "df_met_be_h_", v, "_", as.character(p), ".rds"))
+        # saveRDS(act_station, file = paste0(path_rdata, "df_met_be_h_", v, "_", as.character(p), ".rds"))
+        saveRDS(model, file = paste0(path_rdata, "df_met_be_h_model_", v, "_", as.character(p), ".rds"))
       } else {
         saveRDS(act_station, file = paste0(path_rdata, "df_met_be_h_", v, "_", as.character(p), ".rds"))
       }
@@ -134,7 +136,10 @@ summary(df_met_be_h_filled[[1]])
 summary(df_met_be_h_filled[[2]])
 
 ggplot(data=df_met_be_h_filled[[1]], aes(x=EP, y=Rsquared)) + geom_boxplot()
-ggplot(data=df_met_be_h_filled[[2]], aes(x=EP, y=MAE)) + geom_boxplot()
+ggplot(data=df_met_be_h_filled[[1]], aes(x=EP, y=RMSE)) + geom_boxplot()
+
+ggplot(data=df_met_be_h_filled[[2]], aes(x=EP, y=Rsquared)) + geom_boxplot()
+ggplot(data=df_met_be_h_filled[[2]], aes(x=EP, y=RMSE)) + geom_boxplot()
 
 
 # df_met_h[df_met_h$datetime > as.POSIXct("2008-08-18 23:00:00", "UTC") & df_met_h$datetime < as.POSIXct("2018-08-20 23:00:00", "UTC"), ]
