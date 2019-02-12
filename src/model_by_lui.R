@@ -29,7 +29,7 @@ kt_fold = 2 # ? (k_fold - 1)
 for(rv in rspvars){
   print(rv)
   
-  # remove NA row in rv column
+  # remove NA rows in rv column
   df <- org_df[!is.na(org_df[rv]),]  
   
   # k-fold Leave-Location-Out cross validation (over non NA data)
@@ -41,7 +41,7 @@ for(rv in rspvars){
     
     act_df = df[-indp_cv$indexOut[[icv]],]
     
-    # (k - 1)-fold Leave-Location-Out cross validation for training
+    # kt-fold Leave-Location-Out cross validation for training
     cv_indicies = CreateSpacetimeFolds(act_df, spacevar = "Useful_EP_PlotID", timevar = NA, k = kt_fold, seed = 65451994)
     
     # Set train control
