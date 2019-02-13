@@ -3,19 +3,44 @@ source("src/config.R")
 library(CAST)
 library(caret)
 
-lui_csv = read.csv(paste0(path_input, "LUI_glob_sep_11.02.2019+185450.txt"), sep = "\t", dec=',')
-lui_df = data.frame(EpPlotID = lui_csv$EP.Plotid, lui_g = lui_csv$G_std, lui_m = lui_csv$M_std, lui_f = lui_csv$F_std, lui = lui_csv$LUI)
-write.csv(lui_df, paste0(path_output, "lui.csv"))
-
+#prepare vegetation
 vegetation_df <- read.csv(paste0(path_input, "Vegetation_HeaderData_2008-2016.csv"))
 
-org_df <- merge(vegetation_df, lui_df, by="EpPlotID")
-write.csv(org_df, paste0(path_output, "vegetation_lui.csv"))
+#prepare LUI
+lui_csv = read.csv(paste0(path_input, "LUI_glob_sep_11.02.2019+185450.txt"), sep = "\t", dec=',')
+year <- as.character(lui_csv$Std_procedure.year.)
+year[year == "separately(2008)"] <- "2008"
+year[year == "separately(2009)"] <- "2009"
+year[year == "separately(2010)"] <- "2010"
+year[year == "separately(2011)"] <- "2011"
+year[year == "separately(2012)"] <- "2012"
+year[year == "separately(2013)"] <- "2013"
+year[year == "separately(2014)"] <- "2014"
+year[year == "separately(2015)"] <- "2015"
+year[year == "separately(2016)"] <- "2016"
+lui_df = data.frame(EpPlotID = lui_csv$EP.Plotid, Year = year, lui_g = lui_csv$G_std, lui_m = lui_csv$M_std, lui_f = lui_csv$F_std, lui = lui_csv$LUI)
+write.csv(lui_df, paste0(path_output, "lui.csv"))
+
+#prepare climate
+climate_csv = read.csv(paste0(path_input, "plots.csv"))
+plotid = substring(climate_csv$plotID, 1, 5)
+climate_df = data.frame(Useful_EP_PlotID = plotid, Year=climate_csv$datetime, Ta_200 = climate_csv$Ta_200, Ta_200_DTR = climate_csv$Ta_200_DTR)
+write.csv(climate_df, paste0(path_output, "climate.csv"))
+
+#merge data.frames
+org_df <- merge(vegetation_df, lui_df, by=c("EpPlotID", "Year"))
+org_df <- merge(org_df, climate_df, by=c("Useful_EP_PlotID", "Year"))
+write.csv(org_df, paste0(path_output, "vegetation_lui_climate.csv"))
 #str(org_df) # types of columns
 
-# LUI
-pred_indices <- c("lui_g", "lui_m", "lui_f", "lui")
-print(names(org_df[,pred_indices]))
+# LUI predictors
+pred_lui_indices <- c("lui_g", "lui_m", "lui_f", "lui")
+print(names(org_df[,pred_lui_indices]))
+
+#climate predictors
+pred_climate_indices <- c("Ta_200", "Ta_200_DTR")
+print(names(org_df[,pred_climate_indices]))
+
 
 # variables (number.herbs.with.shrubs to shannon)
 rspvars = c("number.herbs.with.shrubs", "number.grasses.with.shrubs")
@@ -52,7 +77,7 @@ for(rv in rspvars){
                           #repeats = 1, 
                           verbose = FALSE)
     
-    model = ffs(predictors = act_df[, pred_indices], 
+    model = ffs(predictors = act_df[, pred_lui_indices], 
                 response = act_df[, rv],  
                 metric = "RMSE", 
                 method = "rf",
