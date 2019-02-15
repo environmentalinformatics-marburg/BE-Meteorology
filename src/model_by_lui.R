@@ -1,5 +1,5 @@
 #!/usr/bin/Rscript
-#note: needs to be run from parent diretory. e.g. ./src/model_by_lui.R
+#note: needs to be run from parent directory. e.g. ./src/model_by_lui.R
 
 source("src/config.R")
 
@@ -58,9 +58,11 @@ print(names(org_df[,pred_climate_indices]))
 
 
 # variables (number.herbs.with.shrubs to shannon)
-rspvars = c("number.herbs.with.shrubs", "number.grasses.with.shrubs") # TODO
+rspvars = c(5:24)
 # ! FOR TESTING !
-rspvars = c("biomass_g") # ! FOR TESTING !
+#rspvars = c("biomass_g") # ! FOR TESTING !
+print(names(org_df[,rspvars]))
+
 
 k_fold = 10
 kt_fold = 9
@@ -97,8 +99,9 @@ for(rv in rspvars){
     
     model_lui = CAST::ffs(predictors = act_df[, pred_lui_indices], 
                           response = act_df[, rv],  
-                          metric = "RMSE", 
+                          metric = "RMSE",
                           method = "rf",
+                          #method = "xgbLinear",
                           trControl = trCntr,
                           #tuneLength = tune_length,
                           #tuneGrid = lut$MTHD_DEF_LST[["rf"]]$tunegr
@@ -113,6 +116,11 @@ for(rv in rspvars){
     m_lui_df = data.frame(response = test_df[rv], m_lui_prediction = m_lui_prediction, m_lui_res = m_lui_res)
     saveRDS(m_lui_df, file = paste0(path_output, "m_lui_", rv, "_", icv, ".rds"))
     write.csv(m_lui_df, file = paste0(path_output, "m_lui_", rv, "_", icv, ".csv"))
+    
+    stat_lui_df = data.frame(rss = sum((test_df[, rv] - m_lui_prediction)^2), mse = ModelMetrics::mse(test_df[, rv], m_lui_prediction), rmse = ModelMetrics::rmse(test_df[, rv], m_lui_prediction), mae = ModelMetrics::mae(test_df[, rv], m_lui_prediction))
+    write.csv(stat_lui_df, file = paste0(path_output, "stat_lui_", rv, "_", icv, ".csv"))
+    
+    data.frame(RSS=sum(m_lui_res^2), RSS=sum(m_lui_res^2))
     
     #prepare response of residuals in same order as in act_df
     m_climate_response = act_df[, rv] - predict(model_lui, act_df)
@@ -134,7 +142,10 @@ for(rv in rspvars){
     
     m_climate_df = data.frame(response = test_df[rv], m_lui_prediction = m_lui_prediction, m_lui_res = m_lui_res, m_climate_prediction = m_climate_prediction, m_climate_res = m_climate_res)
     saveRDS(m_climate_df, file = paste0(path_output, "m_climate_", rv, "_", icv, ".rds"))
-    write.csv(m_climate_df, file = paste0(path_output, "m_climate_", rv, "_", icv, ".csv"))    
+    write.csv(m_climate_df, file = paste0(path_output, "m_climate_", rv, "_", icv, ".csv"))
+    
+    stat_climate_df = data.frame(rss = sum((m_lui_res - m_climate_prediction)^2), mse = ModelMetrics::mse(m_lui_res, m_climate_prediction), rmse = ModelMetrics::rmse(m_lui_res, m_climate_prediction), mae = ModelMetrics::mae(m_lui_res, m_climate_prediction))
+    write.csv(stat_climate_df, file = paste0(path_output, "stat_climate_", rv, "_", icv, ".csv"))
   }
 }
 
