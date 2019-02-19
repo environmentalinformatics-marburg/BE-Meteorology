@@ -158,11 +158,9 @@ for(rv in rspvars){
     
     data.frame(RSS=sum(m_lui_res^2), RSS=sum(m_lui_res^2))
     
-    #prepare response of residuals in same order as in act_df
-    lui_res = act_df[, rv] - predict(model_lui, act_df)
 
     pred_df = act_df[, pred_climate_indices]
-    pred_df$lui_res = lui_res
+    pred_df$lui_pred = predict(model_lui, act_df)
     
     model_climate = CAST::ffs(predictors = pred_df, 
                           response = act_df[, rv],  
@@ -176,7 +174,7 @@ for(rv in rspvars){
     print(model_climate)
     
     test_climate_df = test_df[, pred_climate_indices]
-    test_climate_df$lui_res = m_lui_res
+    test_climate_df$lui_pred = m_lui_prediction
     
     m_climate_prediction = predict(model_climate, test_climate_df)
     m_climate_res = test_df[, rv] - m_climate_prediction
