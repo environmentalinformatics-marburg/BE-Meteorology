@@ -4,5 +4,6 @@
 .Ruserdata
 input
 output
+output_OLD
 src/config_local.R
 temp

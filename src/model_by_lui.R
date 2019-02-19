@@ -103,8 +103,8 @@ print(names(org_df[,rspvars]))
 k_fold = 10
 kt_fold = 9
 # ! FOR TESTING !
-#k_fold = 2   # ! FOR TESTING !
-#kt_fold = 10  # ! FOR TESTING !
+k_fold = 2   # ! FOR TESTING !
+kt_fold = 10  # ! FOR TESTING !
 
 # Loop over all variables (number.herbs to shannon)
 for(rv in rspvars){
@@ -159,11 +159,13 @@ for(rv in rspvars){
     data.frame(RSS=sum(m_lui_res^2), RSS=sum(m_lui_res^2))
     
     #prepare response of residuals in same order as in act_df
-    m_climate_response = act_df[, rv] - predict(model_lui, act_df)
-    #print(m_climate_response)
+    lui_res = act_df[, rv] - predict(model_lui, act_df)
+
+    pred_df = act_df[, pred_climate_indices]
+    pred_df$lui_res = lui_res
     
-    model_climate = CAST::ffs(predictors = act_df[, pred_climate_indices], 
-                          response = m_climate_response,  
+    model_climate = CAST::ffs(predictors = pred_df, 
+                          response = act_df[, rv],  
                           metric = "RMSE", 
                           method = "rf",
                           trControl = trCntr,
@@ -173,14 +175,17 @@ for(rv in rspvars){
     saveRDS(model_climate, file = paste0(path_output, "model_climate_", rv, "_", icv, ".rds"))
     print(model_climate)
     
-    m_climate_prediction = predict(model_climate, test_df)
-    m_climate_res = m_lui_res - m_climate_prediction
+    test_climate_df = test_df[, pred_climate_indices]
+    test_climate_df$lui_res = m_lui_res
+    
+    m_climate_prediction = predict(model_climate, test_climate_df)
+    m_climate_res = test_df[, rv] - m_climate_prediction
     
     m_climate_df = data.frame(response = test_df[rv], m_lui_prediction = m_lui_prediction, m_lui_res = m_lui_res, m_climate_prediction = m_climate_prediction, m_climate_res = m_climate_res)
     saveRDS(m_climate_df, file = paste0(path_output, "m_climate_", rv, "_", icv, ".rds"))
     write.csv(m_climate_df, file = paste0(path_output, "m_climate_", rv, "_", icv, ".csv"))
     
-    stat_climate_df = data.frame(rss = sum((m_lui_res - m_climate_prediction)^2), mse = ModelMetrics::mse(m_lui_res, m_climate_prediction), rmse = ModelMetrics::rmse(m_lui_res, m_climate_prediction), mae = ModelMetrics::mae(m_lui_res, m_climate_prediction))
+    stat_climate_df = data.frame(rss = sum((test_df[, rv] - m_climate_prediction)^2), mse = ModelMetrics::mse(test_df[, rv], m_climate_prediction), rmse = ModelMetrics::rmse(test_df[, rv], m_climate_prediction), mae = ModelMetrics::mae(test_df[, rv], m_climate_prediction))
     write.csv(stat_climate_df, file = paste0(path_output, "stat_climate_", rv, "_", icv, ".csv"))
   }
 }
