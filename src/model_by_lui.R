@@ -23,7 +23,12 @@ year[year == "separately(2015)"] <- "2015"
 year[year == "separately(2016)"] <- "2016"
 lui_df = data.frame(EpPlotID = lui_csv$EP.Plotid, Year = year, lui_g = lui_csv$G_std, lui_m = lui_csv$M_std, lui_f = lui_csv$F_std, lui = lui_csv$LUI)
 lui_df = lui_df[complete.cases(lui_df), ]
+
+#!! filter by year !!
+lui_df = lui_df[lui_df$Year == 2015, ]
+
 write.csv(lui_df, paste0(path_output, "lui.csv"))
+
 
 #prepare temperature
 temperature_csv = read.csv(paste0(path_input, "temperature.csv"))
@@ -48,6 +53,36 @@ org_df <- merge(org_df, climate_df, by=c("Useful_EP_PlotID", "Year"))
 write.csv(org_df, paste0(path_output, "vegetation_lui_climate.csv"))
 #str(org_df) # types of columns
 
+pdf(paste0(path_output, "plots.pdf"), width=20, height=20)
+pch =  "."
+par(mfrow=c(4,4))
+
+#par(mfrow=c(2,2))
+plot(org_df$biomass_g ~ org_df$lui_g, pch = pch)
+plot(org_df$biomass_g ~ org_df$lui_m, pch = pch)
+plot(org_df$biomass_g ~ org_df$lui_f, pch = pch)
+plot(org_df$biomass_g ~ org_df$lui, pch = pch)
+
+#par(mfrow=c(2,2))
+plot(org_df$doy_biomass ~ org_df$lui_g, pch = pch)
+plot(org_df$doy_biomass ~ org_df$lui_m, pch = pch)
+plot(org_df$doy_biomass ~ org_df$lui_f, pch = pch)
+plot(org_df$doy_biomass ~ org_df$lui, pch = pch)
+
+#par(mfrow=c(2,2))
+plot(org_df$shannon ~ org_df$lui_g, pch = pch)
+plot(org_df$shannon ~ org_df$lui_m, pch = pch)
+plot(org_df$shannon ~ org_df$lui_f, pch = pch)
+plot(org_df$shannon ~ org_df$lui, pch = pch)
+
+#par(mfrow=c(2,2))
+plot(org_df$number.herbs.with.shrubs ~ org_df$lui_g, pch = pch)
+plot(org_df$number.herbs.with.shrubs ~ org_df$lui_m, pch = pch)
+plot(org_df$number.herbs.with.shrubs ~ org_df$lui_f, pch = pch)
+plot(org_df$number.herbs.with.shrubs ~ org_df$lui, pch = pch)
+
+dev.off()
+
 # LUI predictors
 pred_lui_indices <- c("lui_g", "lui_m", "lui_f", "lui")
 print(names(org_df[,pred_lui_indices]))
@@ -61,6 +96,7 @@ print(names(org_df[,pred_climate_indices]))
 rspvars = c(5:24)
 # ! FOR TESTING !
 #rspvars = c("biomass_g") # ! FOR TESTING !
+rspvars = names(org_df[,rspvars]) # replace index numbers by names
 print(names(org_df[,rspvars]))
 
 
@@ -68,7 +104,7 @@ k_fold = 10
 kt_fold = 9
 # ! FOR TESTING !
 #k_fold = 2   # ! FOR TESTING !
-#kt_fold = 2  # ! FOR TESTING !
+#kt_fold = 10  # ! FOR TESTING !
 
 # Loop over all variables (number.herbs to shannon)
 for(rv in rspvars){
