@@ -5,6 +5,10 @@ source("src/config.R")
 
 library(CAST)
 library(caret)
+library(doParallel)
+
+cl <- makeCluster(3)
+registerDoParallel(cl) # start parallel
 
 # prepare vegetation
 vegetation_df <- read.csv(paste0(path_input, "Vegetation_HeaderData_2008-2016.csv"))
@@ -250,5 +254,7 @@ for(rv in rspvars){
   statistic_df = rbind(statistic_df, stat_cross_df)
 }
 write.csv(statistic_df, file = paste0(path_output, "statistic.csv"))
+
+registerDoParallel(cl) # end parallel
 
 
