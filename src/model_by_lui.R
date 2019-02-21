@@ -144,11 +144,10 @@ print(names(org_df[,pred_lui_indices]))
 pred_climate_indices <- c("Ta_200", "Ta_200_DTR", "Ta_200_growing_degree_days_10", "precipitation_radolan", "precipitation_radolan_rain_days", "lA", "lH", "lS") # with region
 print(names(org_df[,pred_climate_indices]))
 
-
 # variables (number.herbs.with.shrubs to shannon)
 rspvars = c(5:24)
 # ! FOR TESTING !
-#rspvars = c("biomass_g") # ! FOR TESTING !
+#rspvars = c("total.cover.cum", "biomass_g") # ! FOR TESTING !
 rspvars = names(org_df[,rspvars]) # replace index numbers by names
 print(names(org_df[,rspvars]))
 
@@ -156,10 +155,11 @@ print(names(org_df[,rspvars]))
 k_fold = 10
 kt_fold = 9
 # ! FOR TESTING !
-k_fold = 2   # ! FOR TESTING !
-kt_fold = 10  # ! FOR TESTING !
+#k_fold = 2   # ! FOR TESTING !
+#kt_fold = 2  # ! FOR TESTING !
 
 # Loop over all variables (number.herbs to shannon)
+statistic_df = data.frame()
 for(rv in rspvars){
   print(rv)
   
@@ -170,6 +170,7 @@ for(rv in rspvars){
   indp_cv = CAST::CreateSpacetimeFolds(df, spacevar = "Useful_EP_PlotID", timevar = NA, k = k_fold, seed = 31051974)
   
   # cross validation loop
+  stat_cross_df = data.frame()
   for(icv in seq(length(indp_cv$index))){
     print(icv)
     
@@ -238,7 +239,16 @@ for(rv in rspvars){
     
     stat_climate_df = data.frame(rss = sum((test_df[, rv] - m_climate_prediction)^2), mse = ModelMetrics::mse(test_df[, rv], m_climate_prediction), rmse = ModelMetrics::rmse(test_df[, rv], m_climate_prediction), mae = ModelMetrics::mae(test_df[, rv], m_climate_prediction), selectedvars = paste0(model_climate$selectedvars, collapse = '  '))
     write.csv(stat_climate_df, file = paste0(path_output, "stat_climate_", rv, "_", icv, ".csv"))
+    
+    stat_df = cbind(stat_lui_df, stat_climate_df)
+    write.csv(stat_df, file = paste0(path_output, "stat__", rv, "_", icv, ".csv"))
+    stat_df$cross = icv
+    stat_cross_df = rbind(stat_cross_df, stat_df)
   }
+  write.csv(stat_cross_df, file = paste0(path_output, "stat_cross__", rv, ".csv"))
+  stat_cross_df$var = rv
+  statistic_df = rbind(statistic_df, stat_cross_df)
 }
+write.csv(statistic_df, file = paste0(path_output, "statistic.csv"))
 
 
