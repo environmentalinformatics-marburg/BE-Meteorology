@@ -8,6 +8,9 @@ library(caret)
 
 # prepare vegetation
 vegetation_df <- read.csv(paste0(path_input, "Vegetation_HeaderData_2008-2016.csv"))
+vegetation_df$lA <- ifelse(substring(vegetation_df$PlotID, 1, 1) == 'A', 1, 0)
+vegetation_df$lH <- ifelse(substring(vegetation_df$PlotID, 1, 1) == 'H', 1, 0)
+vegetation_df$lS <- ifelse(substring(vegetation_df$PlotID, 1, 1) == 'S', 1, 0)
 
 # prepare LUI
 lui_csv = read.csv(paste0(path_input, "LUI_glob_sep_11.02.2019+185450.txt"), sep = "\t", dec=',')
@@ -137,7 +140,8 @@ pred_lui_indices <- c("lui_g", "lui_m", "lui_f", "lui")
 print(names(org_df[,pred_lui_indices]))
 
 # climate predictors
-pred_climate_indices <- c("Ta_200", "Ta_200_DTR", "Ta_200_growing_degree_days_10", "precipitation_radolan", "precipitation_radolan_rain_days")
+#pred_climate_indices <- c("Ta_200", "Ta_200_DTR", "Ta_200_growing_degree_days_10", "precipitation_radolan", "precipitation_radolan_rain_days")
+pred_climate_indices <- c("Ta_200", "Ta_200_DTR", "Ta_200_growing_degree_days_10", "precipitation_radolan", "precipitation_radolan_rain_days", "lA", "lH", "lS") # with region
 print(names(org_df[,pred_climate_indices]))
 
 
@@ -202,7 +206,7 @@ for(rv in rspvars){
     saveRDS(m_lui_df, file = paste0(path_output, "m_lui_", rv, "_", icv, ".rds"))
     write.csv(m_lui_df, file = paste0(path_output, "m_lui_", rv, "_", icv, ".csv"))
     
-    stat_lui_df = data.frame(rss = sum((test_df[, rv] - m_lui_prediction)^2), mse = ModelMetrics::mse(test_df[, rv], m_lui_prediction), rmse = ModelMetrics::rmse(test_df[, rv], m_lui_prediction), mae = ModelMetrics::mae(test_df[, rv], m_lui_prediction))
+    stat_lui_df = data.frame(rss = sum((test_df[, rv] - m_lui_prediction)^2), mse = ModelMetrics::mse(test_df[, rv], m_lui_prediction), rmse = ModelMetrics::rmse(test_df[, rv], m_lui_prediction), mae = ModelMetrics::mae(test_df[, rv], m_lui_prediction), selectedvars = paste0(model_lui$selectedvars, collapse = '  '))
     write.csv(stat_lui_df, file = paste0(path_output, "stat_lui_", rv, "_", icv, ".csv"))
     
     data.frame(RSS=sum(m_lui_res^2), RSS=sum(m_lui_res^2))
@@ -232,7 +236,7 @@ for(rv in rspvars){
     saveRDS(m_climate_df, file = paste0(path_output, "m_climate_", rv, "_", icv, ".rds"))
     write.csv(m_climate_df, file = paste0(path_output, "m_climate_", rv, "_", icv, ".csv"))
     
-    stat_climate_df = data.frame(rss = sum((test_df[, rv] - m_climate_prediction)^2), mse = ModelMetrics::mse(test_df[, rv], m_climate_prediction), rmse = ModelMetrics::rmse(test_df[, rv], m_climate_prediction), mae = ModelMetrics::mae(test_df[, rv], m_climate_prediction))
+    stat_climate_df = data.frame(rss = sum((test_df[, rv] - m_climate_prediction)^2), mse = ModelMetrics::mse(test_df[, rv], m_climate_prediction), rmse = ModelMetrics::rmse(test_df[, rv], m_climate_prediction), mae = ModelMetrics::mae(test_df[, rv], m_climate_prediction), selectedvars = paste0(model_climate$selectedvars, collapse = '  '))
     write.csv(stat_climate_df, file = paste0(path_output, "stat_climate_", rv, "_", icv, ".csv"))
   }
 }
