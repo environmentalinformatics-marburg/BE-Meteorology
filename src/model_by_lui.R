@@ -163,6 +163,7 @@ kt_fold = 9
 #kt_fold = 2  # ! FOR TESTING !
 
 # Loop over all variables (number.herbs to shannon)
+lui_prediction = rep(NA, nrow(org_df))
 statistic_df = data.frame()
 for(rv in rspvars){
   print(rv)
@@ -206,6 +207,10 @@ for(rv in rspvars){
     test_df = df[indp_cv$indexOut[[icv]],]
     m_lui_prediction = predict(model_lui, test_df)
     m_lui_res = test_df[, rv] - m_lui_prediction
+    
+    #global lui prediction scatter
+    lui_prediction[indp_cv$indexOut[[icv]]] = m_lui_prediction
+    print(lui_prediction)
     
     m_lui_df = data.frame(response = test_df[rv], m_lui_prediction = m_lui_prediction, m_lui_res = m_lui_res)
     saveRDS(m_lui_df, file = paste0(path_output, "m_lui_", rv, "_", icv, ".rds"))
@@ -255,6 +260,6 @@ for(rv in rspvars){
 }
 write.csv(statistic_df, file = paste0(path_output, "statistic.csv"))
 
-registerDoParallel(cl) # end parallel
+stopCluster(cl) # end parallel
 
 
