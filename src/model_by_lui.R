@@ -6,6 +6,10 @@ source("src/config.R")
 library(CAST)
 library(caret)
 library(doParallel)
+library(ModelMetrics)
+
+# https://stackoverflow.com/questions/40901445/function-to-calculate-r2-r-squared-in-r
+rsq <- function (x, y) cor(x, y) ^ 2
 
 cl <- makeCluster(3)
 registerDoParallel(cl) # start parallel
@@ -163,6 +167,7 @@ k_fold = 2   # ! FOR TESTING !
 kt_fold = 2  # ! FOR TESTING !
 
 # Loop over all variables (number.herbs to shannon)
+statistic_df = data.frame()
 for(rv in rspvars){
   print(paste0("---------- processing ", rv, "    model 1 ----------"))
   
@@ -248,8 +253,15 @@ for(rv in rspvars){
     climate_prediction[indp_cv$indexOut[[icv]]] = m_climate_prediction
     print(climate_prediction)
   }
-  write.csv(data.frame(value = act_df[, rv], lui_prediction = lui_prediction, climate_prediction = climate_prediction), file = paste0(path_output, "prediction__", rv, ".csv"))
+  
+  x = df[, rv]
+  write.csv(data.frame(value = x, lui_prediction = lui_prediction, climate_prediction = climate_prediction), file = paste0(path_output, "prediction__", rv, ".csv"))
+  stat_df = data.frame(RMSE_lui = rmse(x, lui_prediction), RMSE_climate = rmse(x, climate_prediction),  Rsquared_lui = rsq(x, lui_prediction), Rsquared_climate = rsq(x, climate_prediction), MAE_lui = mae(x, lui_prediction), MAE_climate = mae(x, climate_prediction))  
+  write.csv(stat_df, file = paste0(path_output, "statistic__", rv, ".csv"))
+  stat_df$var = rv
+  statistic_df = rbind(statistic_df, stat_df)
 }
+write.csv(statistic_df, file = paste0(path_output, "statistic.csv"))
 
 stopCluster(cl) # end parallel
 
