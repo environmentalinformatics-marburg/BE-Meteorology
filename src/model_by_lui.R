@@ -16,6 +16,7 @@ registerDoParallel(cl) # start parallel
 
 # prepare vegetation
 vegetation_df <- read.csv(paste0(path_input, "Vegetation_HeaderData_2008-2016.csv"))
+vegetation_df$ambID <- substring(vegetation_df$Useful_EP_PlotID, 4, 6) # ambiguous plotID
 vegetation_df$lA <- ifelse(substring(vegetation_df$PlotID, 1, 1) == 'A', 1, 0)
 vegetation_df$lH <- ifelse(substring(vegetation_df$PlotID, 1, 1) == 'H', 1, 0)
 vegetation_df$lS <- ifelse(substring(vegetation_df$PlotID, 1, 1) == 'S', 1, 0)
@@ -155,7 +156,7 @@ print(names(org_df[,pred_climate_indices]))
 # variables (number.herbs.with.shrubs to shannon)
 rspvars = c(5:24)
 # ! FOR TESTING !
-rspvars = c("total.cover.cum", "biomass_g") # ! FOR TESTING !
+#rspvars = c("total.cover.cum", "biomass_g") # ! FOR TESTING !
 rspvars = names(org_df[,rspvars]) # replace index numbers by names
 print(names(org_df[,rspvars]))
 
@@ -163,8 +164,8 @@ print(names(org_df[,rspvars]))
 k_fold = 10
 kt_fold = 9
 # ! FOR TESTING !
-k_fold = 2   # ! FOR TESTING !
-kt_fold = 2  # ! FOR TESTING !
+#k_fold = 2   # ! FOR TESTING !
+#kt_fold = 2  # ! FOR TESTING !
 
 # Loop over all variables (number.herbs to shannon)
 statistic_df = data.frame()
@@ -175,7 +176,7 @@ for(rv in rspvars){
   df <- org_df[!is.na(org_df[rv]),]  
   
   # k-fold Leave-Location-Out cross validation (over non NA data)
-  indp_cv = CAST::CreateSpacetimeFolds(df, spacevar = "Useful_EP_PlotID", timevar = NA, k = k_fold, seed = 31051974) #TODO change to spacevar just plot number
+  indp_cv = CAST::CreateSpacetimeFolds(df, spacevar = "ambID", timevar = NA, k = k_fold, seed = 31051974)
   
   # cross validation loop
   lui_prediction = rep(NA, nrow(df))
@@ -260,6 +261,14 @@ for(rv in rspvars){
   write.csv(stat_df, file = paste0(path_output, "statistic__", rv, ".csv"))
   stat_df$var = rv
   statistic_df = rbind(statistic_df, stat_df)
+  
+  pdf(paste0(path_output, "residuals__", rv, ".pdf"), width=20, height=20)
+  y1 = lui_prediction - x
+  y2 = climate_prediction - x
+  plot(y1~x, ylim = c(min(y1, y2), max(y1, y2)), xlab = rv, ylab = "residuals", pch='o', col="blue")
+  points(y2~x, pch='x', col="red")
+  abline(h = 0)
+  dev.off()
 }
 write.csv(statistic_df, file = paste0(path_output, "statistic.csv"))
 
