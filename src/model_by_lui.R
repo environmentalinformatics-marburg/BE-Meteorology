@@ -151,7 +151,7 @@ print(names(org_df[,pred_climate_indices]))
 # variables (number.herbs.with.shrubs to shannon)
 rspvars = c(5:24)
 # ! FOR TESTING !
-#rspvars = c("total.cover.cum", "biomass_g") # ! FOR TESTING !
+rspvars = c("total.cover.cum", "biomass_g") # ! FOR TESTING !
 rspvars = names(org_df[,rspvars]) # replace index numbers by names
 print(names(org_df[,rspvars]))
 
@@ -159,27 +159,25 @@ print(names(org_df[,rspvars]))
 k_fold = 10
 kt_fold = 9
 # ! FOR TESTING !
-#k_fold = 2   # ! FOR TESTING !
-#kt_fold = 2  # ! FOR TESTING !
+k_fold = 2   # ! FOR TESTING !
+kt_fold = 2  # ! FOR TESTING !
 
 # Loop over all variables (number.herbs to shannon)
-lui_prediction = rep(NA, nrow(org_df))
-statistic_df = data.frame()
 for(rv in rspvars){
-  print(rv)
+  print(paste0("---------- processing ", rv, "    model 1 ----------"))
   
   # remove NA rows in rv column
   df <- org_df[!is.na(org_df[rv]),]  
   
   # k-fold Leave-Location-Out cross validation (over non NA data)
-  indp_cv = CAST::CreateSpacetimeFolds(df, spacevar = "Useful_EP_PlotID", timevar = NA, k = k_fold, seed = 31051974)
+  indp_cv = CAST::CreateSpacetimeFolds(df, spacevar = "Useful_EP_PlotID", timevar = NA, k = k_fold, seed = 31051974) #TODO change to spacevar just plot number
   
   # cross validation loop
+  lui_prediction = rep(NA, nrow(df))
   stat_cross_df = data.frame()
   for(icv in seq(length(indp_cv$index))){
-    print(icv)
-    
     act_df = df[-indp_cv$indexOut[[icv]],]
+    print(paste0("*** processing ", rv, "    model 1   fold ", icv, " ***   train ", nrow(act_df), "  test ", length(indp_cv$indexOut[[icv]])))
     
     # kt-fold Leave-Location-Out cross validation for training
     cv_indicies = CAST::CreateSpacetimeFolds(act_df, spacevar = "Useful_EP_PlotID", timevar = NA, k = kt_fold, seed = 65451994)
@@ -189,76 +187,69 @@ for(rv in rspvars){
                                 index = cv_indicies$index, 
                                 indexOut = cv_indicies$indexOut,
                                 returnResamp = "all",
-                                #repeats = 1, 
                                 verbose = FALSE)
     
     model_lui = CAST::ffs(predictors = act_df[, pred_lui_indices], 
                           response = act_df[, rv],  
                           metric = "RMSE",
                           method = "rf",
-                          #method = "xgbLinear",
                           trControl = trCntr,
-                          #tuneLength = tune_length,
-                          #tuneGrid = lut$MTHD_DEF_LST[["rf"]]$tunegr
                           importance = TRUE)
     saveRDS(model_lui, file = paste0(path_output, "model_lui_", rv, "_", icv, ".rds"))
     print(model_lui)
     
     test_df = df[indp_cv$indexOut[[icv]],]
     m_lui_prediction = predict(model_lui, test_df)
-    m_lui_res = test_df[, rv] - m_lui_prediction
-    
+
     #global lui prediction scatter
     lui_prediction[indp_cv$indexOut[[icv]]] = m_lui_prediction
     print(lui_prediction)
+  }
+  
+  print(paste0("---------- processing ", rv, "    model 2 ----------"))
+  climate_prediction = rep(NA, nrow(df))  
+  for(icv in seq(length(indp_cv$index))){
+    act_df = df[-indp_cv$indexOut[[icv]],]
+    act_lui_prediction = lui_prediction[-indp_cv$indexOut[[icv]]]
+    print(paste0("*** processing ", rv, "    model 2   fold ", icv, " ***   train ", nrow(act_df), "  test ", length(indp_cv$indexOut[[icv]])))
     
-    m_lui_df = data.frame(response = test_df[rv], m_lui_prediction = m_lui_prediction, m_lui_res = m_lui_res)
-    saveRDS(m_lui_df, file = paste0(path_output, "m_lui_", rv, "_", icv, ".rds"))
-    write.csv(m_lui_df, file = paste0(path_output, "m_lui_", rv, "_", icv, ".csv"))
+    # kt-fold Leave-Location-Out cross validation for training, same seed as in model 1
+    cv_indicies = CAST::CreateSpacetimeFolds(act_df, spacevar = "Useful_EP_PlotID", timevar = NA, k = kt_fold, seed = 65451994)
     
-    stat_lui_df = data.frame(rss = sum((test_df[, rv] - m_lui_prediction)^2), mse = ModelMetrics::mse(test_df[, rv], m_lui_prediction), rmse = ModelMetrics::rmse(test_df[, rv], m_lui_prediction), mae = ModelMetrics::mae(test_df[, rv], m_lui_prediction), selectedvars = paste0(model_lui$selectedvars, collapse = '  '))
-    write.csv(stat_lui_df, file = paste0(path_output, "stat_lui_", rv, "_", icv, ".csv"))
-    
-    data.frame(RSS=sum(m_lui_res^2), RSS=sum(m_lui_res^2))
+    # Set train control
+    trCntr = caret::trainControl(method="cv",
+                                 index = cv_indicies$index, 
+                                 indexOut = cv_indicies$indexOut,
+                                 returnResamp = "all",
+                                 verbose = FALSE)
     
 
     pred_df = act_df[, pred_climate_indices]
-    pred_df$lui_pred = predict(model_lui, act_df)
+    pred_df$lui_prediction = act_lui_prediction
     
     model_climate = CAST::ffs(predictors = pred_df, 
                           response = act_df[, rv],  
                           metric = "RMSE", 
                           method = "rf",
                           trControl = trCntr,
-                          #tuneLength = tune_length,
-                          #tuneGrid = lut$MTHD_DEF_LST[["rf"]]$tunegr
                           importance = TRUE)
     saveRDS(model_climate, file = paste0(path_output, "model_climate_", rv, "_", icv, ".rds"))
     print(model_climate)
     
-    test_climate_df = test_df[, pred_climate_indices]
-    test_climate_df$lui_pred = m_lui_prediction
-    
-    m_climate_prediction = predict(model_climate, test_climate_df)
-    m_climate_res = test_df[, rv] - m_climate_prediction
-    
-    m_climate_df = data.frame(response = test_df[rv], m_lui_prediction = m_lui_prediction, m_lui_res = m_lui_res, m_climate_prediction = m_climate_prediction, m_climate_res = m_climate_res)
-    saveRDS(m_climate_df, file = paste0(path_output, "m_climate_", rv, "_", icv, ".rds"))
-    write.csv(m_climate_df, file = paste0(path_output, "m_climate_", rv, "_", icv, ".csv"))
-    
-    stat_climate_df = data.frame(rss = sum((test_df[, rv] - m_climate_prediction)^2), mse = ModelMetrics::mse(test_df[, rv], m_climate_prediction), rmse = ModelMetrics::rmse(test_df[, rv], m_climate_prediction), mae = ModelMetrics::mae(test_df[, rv], m_climate_prediction), selectedvars = paste0(model_climate$selectedvars, collapse = '  '))
-    write.csv(stat_climate_df, file = paste0(path_output, "stat_climate_", rv, "_", icv, ".csv"))
-    
-    stat_df = cbind(stat_lui_df, stat_climate_df)
-    write.csv(stat_df, file = paste0(path_output, "stat__", rv, "_", icv, ".csv"))
-    stat_df$cross = icv
-    stat_cross_df = rbind(stat_cross_df, stat_df)
+    test_df = df[indp_cv$indexOut[[icv]],]
+    test_lui_prediction = lui_prediction[indp_cv$indexOut[[icv]]]
+    pred_test_df = test_df[, pred_climate_indices]
+    print(nrow(pred_test_df))
+    print(length(test_lui_prediction))
+    pred_test_df$lui_prediction = test_lui_prediction
+    m_climate_prediction = predict(model_climate, pred_test_df)
+
+    #global climate prediction scatter
+    climate_prediction[indp_cv$indexOut[[icv]]] = m_climate_prediction
+    print(climate_prediction)
   }
-  write.csv(stat_cross_df, file = paste0(path_output, "stat_cross__", rv, ".csv"))
-  stat_cross_df$var = rv
-  statistic_df = rbind(statistic_df, stat_cross_df)
+  write.csv(data.frame(value = act_df[, rv], lui_prediction = lui_prediction, climate_prediction = climate_prediction), file = paste0(path_output, "prediction__", rv, ".csv"))
 }
-write.csv(statistic_df, file = paste0(path_output, "statistic.csv"))
 
 stopCluster(cl) # end parallel
 
