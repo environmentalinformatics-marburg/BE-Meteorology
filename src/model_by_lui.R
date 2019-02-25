@@ -180,7 +180,8 @@ for(rv in rspvars){
   
   # cross validation loop
   lui_prediction = rep(NA, nrow(df))
-  stat_cross_df = data.frame()
+  fold_index = rep(NA, nrow(df))
+  stat_lui_folds_df = data.frame()
   for(icv in seq(length(indp_cv$index))){
     act_df = df[-indp_cv$indexOut[[icv]],]
     print(paste0("*** processing ", rv, "    model 1   fold ", icv, " ***   train ", nrow(act_df), "  test ", length(indp_cv$indexOut[[icv]])))
@@ -209,11 +210,17 @@ for(rv in rspvars){
 
     #global lui prediction scatter
     lui_prediction[indp_cv$indexOut[[icv]]] = m_lui_prediction
+    fold_index[indp_cv$indexOut[[icv]]] = icv
     print(lui_prediction)
+    x = test_df[, rv]
+    res = model_lui$results[model_lui$results$mtry == model_lui$bestTune$mtry, ]
+    stat_lui_fold_df = data.frame(RMSE_lui_pred = rmse(x, m_lui_prediction), RMSE_lui_mod = res$RMSE, Rsquared_lui_pred = rsq(x, m_lui_prediction), Rsquared_lui_mod = res$Rsquared, MAE_lui_pred = mae(x, m_lui_prediction), MAE_lui_mod = res$MAE, selectedVars_lui = paste0(model_lui$selectedvars, collapse = "  "),fold_index_lui = icv)
+    stat_lui_folds_df = rbind(stat_lui_folds_df, stat_lui_fold_df)
   }
   
   print(paste0("---------- processing ", rv, "    model 2 ----------"))
-  climate_prediction = rep(NA, nrow(df))  
+  climate_prediction = rep(NA, nrow(df))
+  stat_climate_folds_df = data.frame()
   for(icv in seq(length(indp_cv$index))){
     act_df = df[-indp_cv$indexOut[[icv]],]
     act_lui_prediction = lui_prediction[-indp_cv$indexOut[[icv]]]
@@ -253,18 +260,23 @@ for(rv in rspvars){
     #global climate prediction scatter
     climate_prediction[indp_cv$indexOut[[icv]]] = m_climate_prediction
     print(climate_prediction)
+    x = test_df[, rv]
+    res = model_climate$results[model_climate$results$mtry == model_climate$bestTune$mtry, ]
+    stat_climate_fold_df = data.frame(RMSE_climate_pred = rmse(x, m_climate_prediction), RMSE_climate_mod = res$RMSE, Rsquared_climate_pred = rsq(x, m_climate_prediction), Rsquared_climate_mod = res$Rsquared, MAE_climate_pred = mae(x, m_climate_prediction), MAE_climate_mod = res$MAE, selectedVars_climate = paste0(model_climate$selectedvars, collapse = "  "), fold_index_climate = icv)
+    stat_climate_folds_df = rbind(stat_climate_folds_df, stat_climate_fold_df)
   }
+  write.csv(cbind(stat_lui_folds_df, stat_climate_folds_df), file = paste0(path_output, "statistic_folds__", rv, ".csv"))
   
   x = df[, rv]
-  write.csv(data.frame(value = x, lui_prediction = lui_prediction, climate_prediction = climate_prediction), file = paste0(path_output, "prediction__", rv, ".csv"))
+  write.csv(data.frame(value = x, lui_prediction = lui_prediction, climate_prediction = climate_prediction, fold_index = fold_index), file = paste0(path_output, "prediction__", rv, ".csv"))
   stat_df = data.frame(RMSE_lui = rmse(x, lui_prediction), RMSE_climate = rmse(x, climate_prediction),  Rsquared_lui = rsq(x, lui_prediction), Rsquared_climate = rsq(x, climate_prediction), MAE_lui = mae(x, lui_prediction), MAE_climate = mae(x, climate_prediction))  
   write.csv(stat_df, file = paste0(path_output, "statistic__", rv, ".csv"))
   stat_df$var = rv
   statistic_df = rbind(statistic_df, stat_df)
   
-  pdf(paste0(path_output, "residuals__", rv, ".pdf"), width=20, height=20)
-  y1 = lui_prediction - x
-  y2 = climate_prediction - x
+  pdf(paste0(path_output, "residuals__", rv, ".pdf"), width = 20, height = 20)
+  y1 = x - lui_prediction
+  y2 = x - climate_prediction
   plot(y1~x, ylim = c(min(y1, y2), max(y1, y2)), xlab = rv, ylab = "residuals", pch='o', col="blue")
   points(y2~x, pch='x', col="red")
   abline(h = 0)
