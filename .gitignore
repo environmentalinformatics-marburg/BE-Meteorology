@@ -6,5 +6,7 @@ input
 output
 output_OLD
 output1
+output_with_region
+output_without_region
 src/config_local.R
 temp
