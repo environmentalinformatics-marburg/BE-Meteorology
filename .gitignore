@@ -10,3 +10,4 @@ output_with_region
 output_without_region
 src/config_local.R
 temp
+data

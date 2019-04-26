@@ -1,4 +1,6 @@
-source("C:/Users/tnauss/permanent/plygrnd/exploratorien/BE-Meteorology/src/000_set_environment.R")
+#!/usr/bin/Rscript
+# note: needs to be run from parent directory.
+source("src/000_set_environment.R")
 
 # Read datasets
 df_met_h = be_io_met_hourly(paste0(path_met_h, "/plots.csv"))
@@ -38,24 +40,28 @@ df_met_h$datetime = as.POSIXct(df_met_h$datetime)
 
 # Alb
 # 3278 Metzingen
-# 3402 Münsingen-Apfelstetten
+# 3402 M?nsingen-Apfelstetten
 # 2814 Merklingen
 # 2074 Hechingen
-# 4887 Stötten
+# 4887 St?tten
 # 
 # Hai
-# 6305 Mühlhausen
+# 6305 M?hlhausen
 # 7368 Eisenach
 # 1297 Eschwege
 # 896 Dachwig
 # 1270 Erfurt-Weimar
 # 
 # Sch
-# 164 Angermünde
-# 1869 Grünow
+# 164 Angerm?nde
+# 1869 Gr?now
 # 7351 Feldberg
 # 5745 Zehdenick
 # 7389 Heckelberg
+#
+# windows search pattern for selected dwd stations:
+# *3278_* OR *3402_* OR *2814_* OR *2074_* OR *4887_* OR *6305_* OR *7368_* OR *1297_* OR *0896_* OR *1270_* OR *0164_* OR *1869_* OR *7351_* OR *5745_* OR *7389_*
+
 dwd_station_list = list.files(path_dwd, recursive = TRUE, 
                              pattern = glob2rx("*produkt_tu*.txt"), 
                              full.names = TRUE)
@@ -68,13 +74,14 @@ df_met_h_AE = readRDS(paste0(path_rdata, "/df_met_be_h_AE.rds"))
 dt_range = data.frame(datetime = as.POSIXct(df_met_h_AE$datetime[df_met_h_AE$EPID == "AEG01"]))
 
 df_met_h_dwd = lapply(dwd_station_list, function(s){
+  print(s)
   act_dat = dwd_io_stations_hourly(s)
   act_dat = merge(dt_range, act_dat, by = "datetime", all.x = TRUE)
   
   act_dat$STATIONS_ID = sprintf("%04d", unique(act_dat$STATIONS_ID)[!is.na(unique(act_dat$STATIONS_ID))])
   act_dat$EP = dwd_station_groups$EP[grepl(substr(basename(s),38,41), dwd_station_groups$stid)]
   act_dat$Ta_200[act_dat$Ta_200 == -999] = NA
-  act_dat$rH_200[act_dat$rH_200 == -999] = NA
+  #act_dat$rH_200[act_dat$rH_200 == -999] = NA
   
   # act_dat$agg = substr(act_dat$datetime, 6, 13)
   # 

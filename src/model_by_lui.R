@@ -1,6 +1,5 @@
 #!/usr/bin/Rscript
 # note: needs to be run from parent directory. e.g. ./src/model_by_lui.R
-
 source("src/config.R")
 
 library(CAST)

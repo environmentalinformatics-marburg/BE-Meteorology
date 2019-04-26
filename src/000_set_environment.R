@@ -1,9 +1,13 @@
+#!/usr/bin/Rscript
+# note: needs to be run from parent directory.
+source("src/config.R")
+
 # Set path ---------------------------------------------------------------------
-if(Sys.info()["sysname"] == "Windows"){
-  filepath_base <- "C:/Users/tnauss/permanent/plygrnd/exploratorien/"
-} else {
-  filepath_base <- "/media/permanent/active/exploratorien/"
-}
+#if(Sys.info()["sysname"] == "Windows"){
+#  filepath_base <- "C:/Users/tnauss/permanent/plygrnd/exploratorien/"
+#} else {
+#  filepath_base <- "/media/permanent/active/exploratorien/"
+#}
 
 path_data <- paste0(filepath_base, "/data/")
 path_dwd <- paste0(path_data, "/dwd/")
@@ -19,7 +23,7 @@ path_met_d <- paste0(path_data, "/met_d/")
 path_met_h <- paste0(path_data, "/met_h/")
 path_met_h_uf <- paste0(path_data, "/met_h_unfilled/")
 path_temp <- paste0(path_data, "/temp/")
-path_output <- paste0(path_data, "/output/")
+#path_output <- paste0(path_data, "/output/") # defined in config
 path_vis <- paste0(path_data, "/vis/")
 path_plots <- paste0(path_data, "/plots/")
 
@@ -47,6 +51,6 @@ rasterOptions(tmpdir = path_temp)
 
 saga_cmd <- "C:/OSGeo4W64/apps/saga/saga_cmd.exe "
 # initOTB("C:/OSGeo4W64/bin/")
-initOTB("C:/OSGeo4W64/OTB-5.8.0-win64/OTB-5.8.0-win64/bin/")
+#initOTB("C:/OSGeo4W64/OTB-5.8.0-win64/OTB-5.8.0-win64/bin/") # function not found
 
 

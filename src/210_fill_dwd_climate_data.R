@@ -1,4 +1,7 @@
-source("C:/Users/tnauss/permanent/plygrnd/exploratorien/BE-Meteorology/src/000_set_environment.R")
+#!/usr/bin/Rscript
+# note: needs to be run from parent directory.
+source("src/000_set_environment.R")
+
 if(length(showConnections()) == 0){
   cores = 3
   cl = parallel::makeCluster(cores)
@@ -12,7 +15,8 @@ dt_range = data.frame(datetime = unique(df_met_h_dwd$datetime))
 # head(df_met_h_dwd)
 # str(df_met_h_dwd)
 
-prm = c("Ta_200", "rH_200")
+# prm = c("Ta_200", "rH_200")
+prm = c("Ta_200")
 
 v_na = lapply(prm, function(v){
   df_met_h_dwd_wide = dcast(melt(df_met_h_dwd[!is.na(df_met_h_dwd[, v]), 
@@ -28,7 +32,10 @@ v_na = lapply(prm, function(v){
   p_na = lapply(plots, function(p){
     act_station = df_met_h_dwd_wide_dt_range[, c(1, grep(p, colnames(df_met_h_dwd_wide_dt_range)))]
 
-    act_na = which(is.na(act_station[, grep(v, colnames(act_station))]))
+    # does count na, but need to count "0" entries
+    # act_na = which(is.na(act_station[, grep(v, colnames(act_station))]))
+    act_na = which(act_station[, grep(v, colnames(act_station))] == 0)
+    
     if(length(act_na) > 0){
       response_id = p
       timespan_fill = act_station$datetime[act_na]
@@ -112,7 +119,8 @@ dwd_files = list.files(path_rdata, pattern = glob2rx("*dwd_h_*.rds"), full.names
 dwd_files = dwd_files[!grepl("model", dwd_files)]
 
 
-prm = c("Ta_200", "rH_200")
+# prm = c("Ta_200", "rH_200")
+prm = c("Ta_200")
 df_met_h_dwd_filled = lapply(prm, function(v){
   lapply(dwd_files[grep(v, dwd_files)], function(f){
     dat = readRDS(f)
@@ -124,15 +132,15 @@ df_met_h_dwd_filled = lapply(prm, function(v){
 })
 
 df_met_h_dwd_filled_Ta = do.call("rbind", df_met_h_dwd_filled[[1]])
-df_met_h_dwd_filled_rH = do.call("rbind", df_met_h_dwd_filled[[2]])
+#df_met_h_dwd_filled_rH = do.call("rbind", df_met_h_dwd_filled[[2]])
 
 round(quantile(df_met_h_dwd_filled_Ta$Ta_200, probs = seq(0,1,0.1)), 2)
 round(quantile(df_met_h_dwd_filled_Ta$Ta_200[is.na(df_met_h_dwd_filled_Ta$RMSE)], probs = seq(0,1,0.1)), 2)
 round(quantile(df_met_h_dwd_filled_Ta$Ta_200[!is.na(df_met_h_dwd_filled_Ta$RMSE)], probs = seq(0,1,0.1)), 2)
 
-round(quantile(df_met_h_dwd_filled_rH$rH_200, probs = seq(0,1,0.1)), 2)
-round(quantile(df_met_h_dwd_filled_rH$rH_200[is.na(df_met_h_dwd_filled_Ta$RMSE)], probs = seq(0,1,0.1)), 2)
-round(quantile(df_met_h_dwd_filled_rH$rH_200[!is.na(df_met_h_dwd_filled_Ta$RMSE)], probs = seq(0,1,0.1)), 2)
+#round(quantile(df_met_h_dwd_filled_rH$rH_200, probs = seq(0,1,0.1)), 2)
+#round(quantile(df_met_h_dwd_filled_rH$rH_200[is.na(df_met_h_dwd_filled_Ta$RMSE)], probs = seq(0,1,0.1)), 2)
+#round(quantile(df_met_h_dwd_filled_rH$rH_200[!is.na(df_met_h_dwd_filled_Ta$RMSE)], probs = seq(0,1,0.1)), 2)
 
-boxplot(unique(df_met_h_dwd_filled_rH$RMSE[!is.na(df_met_h_dwd_filled_rH$RMSE)]))
+#boxplot(unique(df_met_h_dwd_filled_rH$RMSE[!is.na(df_met_h_dwd_filled_rH$RMSE)]))
 boxplot(unique(df_met_h_dwd_filled_Ta$RMSE[!is.na(df_met_h_dwd_filled_Ta$RMSE)]))

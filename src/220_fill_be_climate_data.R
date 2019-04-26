@@ -1,4 +1,7 @@
-source("C:/Users/tnauss/permanent/plygrnd/exploratorien/BE-Meteorology/src/000_set_environment.R")
+#!/usr/bin/Rscript
+# note: needs to be run from parent directory.
+source("src/000_set_environment.R")
+
 if(length(showConnections()) == 0){
   cores = 3
   cl = parallel::makeCluster(cores)
@@ -24,7 +27,7 @@ lapply(be_files, function(e){
   df_met_h = readRDS(e)
   df_met_h$datetime = as.POSIXct(df_met_h$datetime)
   
-  prm = c("Ta_200", "rH_200")
+  # prm = c("Ta_200", "rH_200")
   prm = c("Ta_200")
   
   v_na = lapply(prm, function(v){
@@ -44,7 +47,8 @@ lapply(be_files, function(e){
     colnames(dwd_wide)[-1] = paste0(v, "_", colnames(dwd_wide)[-1])
     
     p_na = lapply(unique(df_met_h$EPID), function(p){
-      act_station = df_met_h[df_met_h$EPID == p, c("EPID", "datetime", v, "qualitycounter")]
+      # act_station = df_met_h[df_met_h$EPID == p, c("EPID", "datetime", v, "qualitycounter")]
+      act_station = df_met_h[df_met_h$EPID == p, c("EPID", "datetime", v)]
       
       act_na = which(is.na(act_station[, v]))
       if(length(act_na) > 0){
@@ -102,7 +106,7 @@ lapply(be_files, function(e){
         act_station$RsquaredSD[fillvalues$act_na] = model$results$RsquaredSD
         act_station$MAESD[fillvalues$act_na] = model$results$MAESD
         
-        # saveRDS(act_station, file = paste0(path_rdata, "df_met_be_h_", v, "_", as.character(p), ".rds"))
+        saveRDS(act_station, file = paste0(path_rdata, "df_met_be_h_", v, "_", as.character(p), ".rds"))
         saveRDS(model, file = paste0(path_rdata, "df_met_be_h_model_", v, "_", as.character(p), ".rds"))
       } else {
         saveRDS(act_station, file = paste0(path_rdata, "df_met_be_h_", v, "_", as.character(p), ".rds"))
@@ -116,7 +120,8 @@ lapply(be_files, function(e){
 
 # Cross check
 be_files = list.files(path_rdata, pattern = glob2rx("df_met_be_h_*.rds"), full.names = TRUE)
-prm = c("Ta_200", "rH_200")
+# prm = c("Ta_200", "rH_200")
+prm = c("Ta_200")
 df_met_be_h_filled = lapply(prm, function(v){
   lapply(be_files[grep(v, be_files)], function(f){
     dat = readRDS(f)

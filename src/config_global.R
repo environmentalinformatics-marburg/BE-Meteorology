@@ -7,8 +7,8 @@
 #
 # --- ---
 
-
-path_input = "input/"
-path_output = "output/"
+filepath_base <- "."
+path_input = paste0(filepath_base, "/input/")
+path_output = paste0(filepath_base, "/output/")
 
 if(!dir.exists(path_output)) dir.create(path_output, recursive = TRUE)
