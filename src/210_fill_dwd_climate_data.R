@@ -12,16 +12,29 @@ if(length(showConnections()) == 0){
 df_met_h_dwd = readRDS(paste0(path_rdata, "/df_met_dwd_h.rds"))
 
 dt_range = data.frame(datetime = unique(df_met_h_dwd$datetime))
-# head(df_met_h_dwd)
-# str(df_met_h_dwd)
+
+# testing dataset
+#df_met_h_dwd = data.frame(datetime=c("a","a","b","b","c","c","d","d","e","e"), STATIONS_ID=c("n","m","x","x","y","y","y","y","z","z"), Ta_200=c(7,8,10,20,NA,1,2,NA,NA,NA))
+
+#df_met_h_dwd = head(df_met_h_dwd)
+
+# remove duplicates (and NA)
+df_met_h_dwd = aggregate(Ta_200 ~ datetime + STATIONS_ID, df_met_h_dwd, mean)
 
 # prm = c("Ta_200", "rH_200")
 prm = c("Ta_200")
 
-v_na = lapply(prm, function(v){
+valueSelect = function(v) {
+  x = mean(v, na.rm=TRUE)
+  return(is.finite(x))
+}
+
+v = prm[1]
+#v_na = lapply(prm, function(v){
   df_met_h_dwd_wide = dcast(melt(df_met_h_dwd[!is.na(df_met_h_dwd[, v]), 
                                               colnames(df_met_h_dwd) %in% c("STATIONS_ID", "datetime", v)], 
-                                 id.vars = c("STATIONS_ID", "datetime")), 
+                                 id.vars = c("STATIONS_ID", "datetime")),
+                            #fun.aggregate = valueSelect,
                             datetime~variable+STATIONS_ID)
   df_met_h_dwd_wide_dt_range = merge(dt_range, df_met_h_dwd_wide, by = "datetime", all.x = TRUE)
   # summary(df_met_h_dwd_wide_dt_range)
@@ -29,12 +42,13 @@ v_na = lapply(prm, function(v){
   plots = colnames(df_met_h_dwd_wide_dt_range)[grepl(v, colnames(df_met_h_dwd_wide_dt_range))]
   plots = substr(plots, nchar(v)+2, nchar(plots))
   
+  #p = 3278
   p_na = lapply(plots, function(p){
     act_station = df_met_h_dwd_wide_dt_range[, c(1, grep(p, colnames(df_met_h_dwd_wide_dt_range)))]
 
-    # does count na, but need to count "0" entries
-    # act_na = which(is.na(act_station[, grep(v, colnames(act_station))]))
-    act_na = which(act_station[, grep(v, colnames(act_station))] == 0)
+    act_na = which(is.na(act_station[, grep(v, colnames(act_station))]))
+    #act_na = which(act_station[, grep(v, colnames(act_station))] == 0)
+    #act_na = which(!act_station[, grep(v, colnames(act_station))])
     
     if(length(act_na) > 0){
       response_id = p
@@ -44,6 +58,7 @@ v_na = lapply(prm, function(v){
                                      df_met_h_dwd$datetime %in% timespan_fill, 
                                    c("STATIONS_ID", "datetime",v)]
       predictor_set_wide = dcast(predictor_set, datetime ~ STATIONS_ID, value.var=v)
+      #predictor_set_wide = dcast(predictor_set, datetime ~ STATIONS_ID, value.var=v, fun.aggregate=valueSelect)
       predictor_set_wide = predictor_set_wide[ , colnames(predictor_set_wide) == "datetime" |
                                                  colSums(is.na(predictor_set_wide)) == 0]
       
@@ -51,6 +66,7 @@ v_na = lapply(prm, function(v){
                                     df_met_h_dwd$STATIONS_ID %in% c(response_id, colnames(predictor_set_wide[, -1])), 
                                   c("STATIONS_ID", "datetime", v)]
       training_set_wide = dcast(training_set, datetime ~ STATIONS_ID, value.var=v)
+      #training_set_wide = dcast(training_set, datetime ~ STATIONS_ID, value.var=v, fun.aggregate=valueSelect)
       training_set_wide = training_set_wide[complete.cases(training_set_wide),]
       
       # Create training folds
@@ -85,11 +101,21 @@ v_na = lapply(prm, function(v){
       
     act_station = df_met_h_dwd[df_met_h_dwd$STATIONS_ID == p,
                                c(which((colnames(df_met_h_dwd) %in% c("datetime", "STATIONS_ID"))), grep(v, colnames(df_met_h_dwd)))]
+    print(paste0("station: ", p, " ", v, " entries: ", length(act_station$datetime), "   NA: ", length(act_na), " real: ", (length(act_station$datetime) - length(act_na)) ))
+    print(paste0("station: ", p, " ", v, " entries: ", length(act_station$datetime), "   NA: ", sum(is.na(act_station[[v]])), " real: ", sum(!is.na(act_station[[v]])) ))
     
     if(length(act_na) > 0){
       act_station = data.frame(act_station, model$results[,-1])
-      act_station[-fillvalues$act_na, colnames(act_station) %in% c("RMSE", "Rsquared", "MAE", "RMSESD", "RsquaredSD", "MAESD")] = NA
-      act_station[fillvalues$act_na, v] = fillvalues[, v]
+      
+      fv = data.frame(datetime=fillvalues$datetime, STATIONS_ID=p)
+      fv[v] = fillvalues[v]
+      fv[, c("RMSE", "Rsquared", "MAE", "RMSESD", "RsquaredSD", "MAESD")] = NA
+      act_station = rbind(act_station, fv)
+      act_station <- act_station[order(act_station$datetime),]
+      
+      #act_station[-fillvalues$act_na, colnames(act_station) %in% c("RMSE", "Rsquared", "MAE", "RMSESD", "RsquaredSD", "MAESD")] = NA
+      #act_station[fillvalues$act_na, v] = fillvalues[, v]
+      
       if(v == "rH_200"){
         if(nrow(act_station[!is.na(act_station$RMSE) & act_station[, v] > 100, ])>0){
           act_station[!is.na(act_station$RMSE) & act_station[, v] > 100, v] = 100
@@ -98,6 +124,9 @@ v_na = lapply(prm, function(v){
           act_station[!is.na(act_station$RMSE) & act_station[, v] < 0, v] = 0
         }
       }
+      print(paste0("station: ", p, " ", v, " entries: ", length(act_station$datetime), "   NA: ", sum(is.na(act_station[[v]])), " real: ", sum(!is.na(act_station[[v]])) ))
+      
+      
       saveRDS(model, file = paste0(path_rdata, "df_met_dwd_h_model_", v, "_", as.character(p), ".rds"))
       saveRDS(act_station, file = paste0(path_rdata, "df_met_dwd_h_", v, "_", as.character(p), ".rds"))
     } else {
@@ -111,7 +140,7 @@ v_na = lapply(prm, function(v){
     }
     return(NULL)
   })
-  })
+  #})
 
 
 # Cross check
